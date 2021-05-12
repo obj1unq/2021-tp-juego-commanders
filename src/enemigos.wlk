@@ -1,4 +1,5 @@
 import wollok.game.*
+import ataques.*
 
 object navePequenia {
 	var property vida = 100
