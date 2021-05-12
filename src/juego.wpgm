@@ -1,6 +1,7 @@
 import wollok.game.*
 import enemigos.*
 import configuraciones.*
+import ataques.*
 
 //Main
 program juego {

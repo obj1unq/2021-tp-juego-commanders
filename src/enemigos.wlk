@@ -5,15 +5,15 @@ object navePequenia {
 	var property vida = 100
 	
 	method position() {
-		return game.at(25,20)
+		return game.at(25,10)
 	}
 	
-	method imagen() {
-		return "nave1.png"
+	method image() {
+		return "nave.png"
 	}
 	
 	method disparar() {
-		game.addVisual(disparo)
+		game.addVisualIn(disparo, self.position().left(20))
 	}
 }
 
@@ -24,12 +24,12 @@ object naveMediana {
 		return game.at(25,25)
 	}
 	
-	method imagen() {
-		return "nave2.png"
+	method image() {
+		return "nave.png"
 	}
 	
 	method disparar() {
-		game.addVisual(disparo)
+		game.addVisualIn(disparo, self.position().left(20))
 	}
 }
 
@@ -40,11 +40,15 @@ object naveGrande {
 		return game.at(25,40)
 	}
 	
-	method imagen() {
-		return "nave3.png"
+	method image() {
+		return "nave.png"
 	}
 	
 	method disparar() {
-		game.addVisual(disparo)
+		game.addVisualIn(disparo, self.position().left(20))
+	}
+	
+	method dispararTodoElTiempo() {
+		game.onTick(2000, "naveDispara", {self.disparar()})
 	}
 }
