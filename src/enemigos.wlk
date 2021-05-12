@@ -5,7 +5,7 @@ object navePequenia {
 	var property vida = 100
 	
 	method position() {
-		return game.at(5,2)
+		return game.at(25,20)
 	}
 	
 	method imagen() {
@@ -21,7 +21,7 @@ object naveMediana {
 	var property vida = 250
 	
 	method position() {
-		return game.at(5,5)
+		return game.at(25,25)
 	}
 	
 	method imagen() {
@@ -37,11 +37,11 @@ object naveGrande {
 	var property vida = 500
 	
 	method position() {
-		return game.at(5,8)
+		return game.at(25,40)
 	}
 	
 	method imagen() {
-		return "nave2.png"
+		return "nave3.png"
 	}
 	
 	method disparar() {
