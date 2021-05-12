@@ -11,7 +11,7 @@ object nivel1 {
 	}
 	
 	method configuracionTeclas(){
-		keyboard.w().onPressDo({/* */})
+		keyboard.w().onPressDo({/* accion*/})
 		keyboard.s().onPressDo({/* */})
 		keyboard.a().onPressDo({/* */})
 		keyboard.d().onPressDo({/* */})
