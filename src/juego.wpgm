@@ -8,30 +8,7 @@ program juego {
 	game.height(50) //alto
 	game.width(50) //ancho
 //	game.boardGround(/*todavia no hay*/)
-	game.cellSize(10) // ajustar el tamaño de pixeles de celda
-	
-	keyboard.w().onPressDo({/* */})
-	keyboard.s().onPressDo({/* */})
-	keyboard.a().onPressDo({/* */})
-	keyboard.d().onPressDo({/* */})
-	
+	game.cellSize(10) // ajustar el tamaño de pixeles de celda	
 	nivel1.iniciar()
-	game.addVisual(navePequenia)
-	game.addVisual(naveMediana)
-	game.addVisual(naveGrande)
-	
 	game.start()
 }
-
-
-
-/*
-import wollok.game.*
-import pepita.*
-
-program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
-	game.start()
-}
-*/
