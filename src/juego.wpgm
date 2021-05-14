@@ -5,10 +5,10 @@ import ataques.*
 
 //Main
 program juego {
-	game.title("notFound")
+	game.title("commanders")
 	game.height(50) //alto
-	game.width(50) //ancho
-//	game.boardGround(/*todavia no hay*/)
+	game.width(140) //ancho
+	game.boardGround("fondo.png")
 	game.cellSize(10) // ajustar el tamaño de pixeles de celda	
 	nivel1.iniciar()
 	game.start()

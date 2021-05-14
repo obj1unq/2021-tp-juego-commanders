@@ -15,7 +15,7 @@ class NavePequenia {
 	}
 	
 	method image() {
-		return "nave1.png"
+		return "nave-chica.png"
 	}
 	
 	method disparar() {
@@ -38,7 +38,7 @@ class NaveMediana {
 	}
 	
 	method image() {
-		return "nave2.png"
+		return "nave-mediana.png"
 	}
 	
 	method disparar() {
@@ -61,7 +61,7 @@ class NaveGrande {
 	}
 	
 	method image() {
-		return "nave3.png"
+		return "nave-grande.png"
 	}
 	
 	method disparar() {
@@ -69,6 +69,26 @@ class NaveGrande {
 	}
 	
 }
+
+class Jugador {
+	var property vida = 1000
+	const property tipo = "jugador"
+	
+	method position() {
+		//habría que ponerle una posición fija dentro de la pantalla de inicio
+		return game.at(0,25)
+	}
+	
+	method image() {
+		return "player1.png"
+	}
+	
+	method disparar() {
+		game.addVisual(new DisparoEnemigo(position = self.position().right(1)))
+	}
+	
+}
+
 
 object posicion {
 	const posibles = [game.at(30,0), game.at(30,10), game.at(30,20), game.at(30,30), game.at(30,40)]
