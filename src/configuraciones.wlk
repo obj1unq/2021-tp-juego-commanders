@@ -3,9 +3,9 @@ import enemigos.*
 
 object nivel1 {
 	method iniciar(){
-		game.addVisual(navePequenia)
-		game.addVisual(naveMediana)
-		game.addVisual(naveGrande)
+		game.addVisual(new NavePequenia())
+		game.addVisual(new NaveMediana())
+		game.addVisual(new NaveGrande())
 		
 		config.configuracionTeclas()
 		config.dispararTodoElTiempo()

@@ -1,56 +1,79 @@
 import wollok.game.*
 import ataques.*
 
-object navePequenia {
+class NavePequenia {
 	var property vida = 100
 	const property tipo = "enemigo"
+	var property position = null
 	
 	method position() {
-		return game.at(25,10)
+		if (position == null) {
+			position = posicion.random()
+			return position
+		}
+		else {return position}
 	}
 	
 	method image() {
-		return "nave.png"
+		return "nave1.png"
 	}
 	
 	method disparar() {
-		game.addVisual(new DisparoEnemigo(position = self.position().left(5)))
+		game.addVisual(new DisparoEnemigo(position = self.position().left(1)))
 	}
 	
 }
 
-object naveMediana {
+class NaveMediana {
 	var property vida = 250
 	const property tipo = "enemigo"
+	var property position = null
 	
 	method position() {
-		return game.at(25,25)
+		if (position == null) {
+			position = posicion.random()
+			return position
+		}
+		else {return position}
 	}
 	
 	method image() {
-		return "nave.png"
+		return "nave2.png"
 	}
 	
 	method disparar() {
-		game.addVisual(new DisparoEnemigo(position = self.position().left(5)))
+		game.addVisual(new DisparoEnemigo(position = self.position().left(1)))
 	}
 	
 }
 
-object naveGrande {
+class NaveGrande {
 	var property vida = 500
 	const property tipo = "enemigo"
+	var property position = null
 	
 	method position() {
-		return game.at(25,40)
+		if (position == null) {
+			position = posicion.random()
+			return position
+		}
+		else {return position}
 	}
 	
 	method image() {
-		return "nave.png"
+		return "nave3.png"
 	}
 	
 	method disparar() {
-		game.addVisual(new DisparoEnemigo(position = self.position().left(5)))
+		game.addVisual(new DisparoEnemigo(position = self.position().left(1)))
 	}
 	
+}
+
+object posicion {
+	const posibles = [game.at(30,0), game.at(30,10), game.at(30,20), game.at(30,30), game.at(30,40)]
+	
+	method random() {
+		return posibles.anyOne()
+	}
 }
