@@ -44,7 +44,6 @@ class NaveGrande {
 		game.addVisual(new DisparoEnemigo(position = self.position().left(1)))
 	}
 	
-<<<<<<< HEAD
 }
 
 class Jugador {
@@ -73,6 +72,4 @@ object posicion {
 	method random() {
 		return posibles.anyOne()
 	}
-=======
->>>>>>> branch 'master' of https://github.com/obj1unq/2021-tp-juego-commanders.git
 }
