@@ -4,15 +4,7 @@ import ataques.*
 class NavePequenia {
 	var property vida = 100
 	const property tipo = "enemigo"
-	var property position = null
-	
-	method position() {
-		if (position == null) {
-			position = posicion.random()
-			return position
-		}
-		else {return position}
-	}
+	var property position = game.at(30.randomUpTo(40), 10.randomUpTo(40))
 	
 	method image() {
 		return "nave-chica.png"
@@ -27,15 +19,7 @@ class NavePequenia {
 class NaveMediana {
 	var property vida = 250
 	const property tipo = "enemigo"
-	var property position = null
-	
-	method position() {
-		if (position == null) {
-			position = posicion.random()
-			return position
-		}
-		else {return position}
-	}
+	var property position = game.at(30.randomUpTo(40), 10.randomUpTo(40))
 	
 	method image() {
 		return "nave-mediana.png"
@@ -50,15 +34,7 @@ class NaveMediana {
 class NaveGrande {
 	var property vida = 500
 	const property tipo = "enemigo"
-	var property position = null
-	
-	method position() {
-		if (position == null) {
-			position = posicion.random()
-			return position
-		}
-		else {return position}
-	}
+	var property position = game.at(30.randomUpTo(40), 10.randomUpTo(40))
 	
 	method image() {
 		return "nave-grande.png"
@@ -68,6 +44,7 @@ class NaveGrande {
 		game.addVisual(new DisparoEnemigo(position = self.position().left(1)))
 	}
 	
+<<<<<<< HEAD
 }
 
 class Jugador {
@@ -96,4 +73,6 @@ object posicion {
 	method random() {
 		return posibles.anyOne()
 	}
+=======
+>>>>>>> branch 'master' of https://github.com/obj1unq/2021-tp-juego-commanders.git
 }
