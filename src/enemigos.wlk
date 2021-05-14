@@ -3,6 +3,7 @@ import ataques.*
 
 object navePequenia {
 	var property vida = 100
+	const property tipo = "enemigo"
 	
 	method position() {
 		return game.at(25,10)
@@ -13,12 +14,14 @@ object navePequenia {
 	}
 	
 	method disparar() {
-		game.addVisualIn(disparo, self.position().left(20))
+		game.addVisual(new DisparoEnemigo(position = self.position().left(5)))
 	}
+	
 }
 
 object naveMediana {
 	var property vida = 250
+	const property tipo = "enemigo"
 	
 	method position() {
 		return game.at(25,25)
@@ -29,12 +32,14 @@ object naveMediana {
 	}
 	
 	method disparar() {
-		game.addVisualIn(disparo, self.position().left(20))
+		game.addVisual(new DisparoEnemigo(position = self.position().left(5)))
 	}
+	
 }
 
 object naveGrande {
 	var property vida = 500
+	const property tipo = "enemigo"
 	
 	method position() {
 		return game.at(25,40)
@@ -45,10 +50,7 @@ object naveGrande {
 	}
 	
 	method disparar() {
-		game.addVisualIn(disparo, self.position().left(20))
+		game.addVisual(new DisparoEnemigo(position = self.position().left(5)))
 	}
 	
-	method dispararTodoElTiempo() {
-		game.onTick(2000, "naveDispara", {self.disparar()})
-	}
 }
