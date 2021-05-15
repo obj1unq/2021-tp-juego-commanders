@@ -4,13 +4,14 @@ class Disparo {
 	//Debemos setearle el daño y la posicion cada vez que se instancia un disparo.
 	var property damage
 	var property position
+	const property tipo
 	
 	method damage(){
 		return damage
 	}
 	
 	method image(){
-		return "disparoAzul.png"
+		return "bulletBlue.png"
 	}
 
 	method irA(nuevaPosicion){
@@ -20,7 +21,7 @@ class Disparo {
 	method moverse(){
 		game.onTick(50,"Movimiento Disparo", {
 			
-			self.irA(self.position().right(1))
+			self.irA(self.position().left(1))
 		})
 	}	
 }

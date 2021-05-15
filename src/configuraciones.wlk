@@ -23,7 +23,7 @@ object config {
 	}
 	
 	method dispararTodoElTiempo(){
-		game.onTick(2000, "enemigos", {self.enemigosDisparar()})
+		game.onTick(500, "enemigos", {self.enemigosDisparar()})
 	}
 	
 	method enemigosDisparar(){
