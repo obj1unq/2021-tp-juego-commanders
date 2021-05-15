@@ -11,7 +11,11 @@ class NavePequenia {
 	}
 	
 	method disparar() {
-		game.addVisual(new DisparoEnemigo(position = self.position().left(1)))
+		//Instanciamos el disparo, lo mostramos y le damos la orden para que se mueva.
+		const disparo = new Disparo(position = self.position().right(10), damage = 20)
+		game.addVisual(disparo)
+		disparo.moverse()	//(el movimiento es provisorio para despues ver como pararlo cuando este fuera del tablero
+							//sino se lagea porque empiezan a juntarse)
 	}
 	
 }
@@ -26,7 +30,9 @@ class NaveMediana {
 	}
 	
 	method disparar() {
-		game.addVisual(new DisparoEnemigo(position = self.position().left(1)))
+		const disparo = new Disparo(position = self.position().right(10), damage = 30)
+		game.addVisual(disparo)
+		disparo.moverse()
 	}
 	
 }
@@ -41,7 +47,9 @@ class NaveGrande {
 	}
 	
 	method disparar() {
-		game.addVisual(new DisparoEnemigo(position = self.position().left(1)))
+		const disparo = new Disparo(position = self.position().right(10), damage = 20)
+		game.addVisual(disparo)
+		disparo.moverse()
 	}
 	
 }
@@ -60,7 +68,9 @@ class Jugador {
 	}
 	
 	method disparar() {
-		game.addVisual(new DisparoEnemigo(position = self.position().right(1)))
+		const disparo = new Disparo(position = self.position().right(10), damage = 20)
+		game.addVisual(disparo)
+		disparo.moverse()
 	}
 	
 }

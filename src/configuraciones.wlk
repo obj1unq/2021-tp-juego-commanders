@@ -19,6 +19,7 @@ object config {
 		keyboard.s().onPressDo({/* */})
 		keyboard.a().onPressDo({/* */})
 		keyboard.d().onPressDo({/* */})
+		keyboard.space().onPressDo({/* */})//Tecla para el disparo del jugador.
 	}
 	
 	method dispararTodoElTiempo(){
