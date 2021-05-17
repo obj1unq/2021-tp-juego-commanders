@@ -10,7 +10,7 @@ object nivel1 {
 		
 		config.configuracionTeclas()
 		config.aparicionEnemigosAleatorios()
-		game.onTick(2000, "disparoAutomatico", {config.enemigosDisparar()})
+		//game.onTick(2000, "disparoAutomatico", {config.enemigosDisparar()})
 		game.schedule(27000, {game.removeTickEvent("enemigoAleatorio")})
 	}
 }
@@ -26,17 +26,18 @@ object config {
 	}
 	
 	method aparicionEnemigosAleatorios(){
+		var enemigo
 		//cada cierto tiempo aparece un enemigo aleatorio
-		
-		game.onTick(5000, "enemigoAleatorio" , {game.addVisual(self.enemigoAleatorio())})
-		//la frecuencia con la que aparece un enemigo es 5000
-		self.enemigosDisparar()
+		game.onTick(5000, "enemigoAleatorio" , {
+			enemigo = self.enemigoAleatorio()
+			game.addVisual(enemigo)
+			enemigo.dispararTodoElTiempo()	
+		})
 	}
 	
 	method enemigoAleatorio(){
 		//lista de los posibles enemigos a aparecer
 		const enemigo = [new NavePequenia(), new NaveMediana(), new NaveGrande()]
-		
 		return enemigo.anyOne()
 	}
 	

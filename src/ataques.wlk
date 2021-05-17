@@ -25,7 +25,7 @@ class Disparo {
 				self.desactivarDisparo()
 			}
 			else {
-			self.irA(self.position().left(1))
+				self.irA(self.position().left(1))
 			}
 			}
 			)
