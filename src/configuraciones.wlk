@@ -6,7 +6,7 @@ object nivel1 {
 		//game.addVisual(new NavePequenia())
 		//game.addVisual(new NaveMediana())
 		//game.addVisual(new NaveGrande())
-		game.addVisual(new Jugador())//jugador está en el wlk de enemigos... lo puse ahí para probarlo
+		game.addVisual(jugador)//jugador está en el wlk de enemigos... lo puse ahí para probarlo
 		
 		config.configuracionTeclas()
 		config.aparicionEnemigosAleatorios()
@@ -18,10 +18,10 @@ object nivel1 {
 object config {
 	
 	method configuracionTeclas(){
-		keyboard.w().onPressDo({/* accion*/})
-		keyboard.s().onPressDo({/* */})
-		keyboard.a().onPressDo({/* */})
-		keyboard.d().onPressDo({/* */})
+		keyboard.w().onPressDo({jugador.irA(jugador.position().up(1))})
+		keyboard.s().onPressDo({jugador.irA(jugador.position().down(1))})
+		keyboard.a().onPressDo({jugador.irA(jugador.position().left(1))})
+		keyboard.d().onPressDo({jugador.irA(jugador.position().right(1))})
 		keyboard.space().onPressDo({/* */})//Tecla para el disparo del jugador.
 	}
 	
@@ -33,6 +33,7 @@ object config {
 			game.addVisual(enemigo)
 			enemigo.dispararTodoElTiempo()	
 		})
+
 	}
 	
 	method enemigoAleatorio(){
@@ -49,6 +50,7 @@ object config {
 	method enemigosEnPantalla(){//este metodo utiliza el tipo "enemigo" para hacer que todos disparen
 		return game.allVisuals().filter{objeto=>objeto.tipo()=="enemigo"}
 		//tuve que hacer que el resto de objetos tambien entendieran el mensaje tipo() para evitar que rompan el programa
+	
 	}
 	
 	
