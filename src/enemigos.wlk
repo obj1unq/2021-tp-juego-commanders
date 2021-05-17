@@ -3,8 +3,8 @@ import ataques.*
 
 class NavePequenia {
 	var property vida = 100
-	//const property tipo = "enemigo"
-	var property position = posicion.random()
+	const property tipo = "enemigo"
+	var property position = game.at(30.randomUpTo(40), 10.randomUpTo(40))
 	
 	method image() {
 		return "nave-chica.png"
@@ -26,7 +26,7 @@ class NavePequenia {
 
 class NaveMediana {
 	var property vida = 250
-	//const property tipo = "enemigo"
+	const property tipo = "enemigo"
 	var property position = game.at(30.randomUpTo(40), 10.randomUpTo(40))
 	
 	method image() {
@@ -47,7 +47,7 @@ class NaveMediana {
 
 class NaveGrande {
 	var property vida = 500
-	//const property tipo = "enemigo"
+	const property tipo = "enemigo"
 	var property position = game.at(30.randomUpTo(40), 10.randomUpTo(40))
 	
 	method image() {
@@ -68,7 +68,7 @@ class NaveGrande {
 
 class Jugador {
 	var property vida = 1000
-	//const property tipo = "jugador"
+	const property tipo = "jugador"
 	
 	method position() {
 		//habría que ponerle una posición fija dentro de la pantalla de inicio
@@ -85,13 +85,4 @@ class Jugador {
 		disparo.moverse()
 	}
 	
-}
-
-
-object posicion {
-	const posibles = [game.at(30,0), game.at(30,10), game.at(30,20), game.at(30,30), game.at(30,40)]
-	
-	method random() {
-		return posibles.anyOne()
-	}
 }

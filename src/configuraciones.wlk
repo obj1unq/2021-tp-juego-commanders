@@ -10,10 +10,13 @@ object nivel1 {
 		
 		config.configuracionTeclas()
 		config.aparicionEnemigosAleatorios()
+		game.onTick(2000, "disparoAutomatico", {config.enemigosDisparar()})
+		game.schedule(27000, {game.removeTickEvent("enemigoAleatorio")})
 	}
 }
 
 object config {
+	
 	method configuracionTeclas(){
 		keyboard.w().onPressDo({/* accion*/})
 		keyboard.s().onPressDo({/* */})
@@ -23,20 +26,30 @@ object config {
 	}
 	
 	method aparicionEnemigosAleatorios(){
-		//Aca hay que hacer que se vayan creando cada cierto tiempo un enemigo.
-		const enemigo = new NavePequenia()
-		game.addVisual(enemigo)
-		enemigo.dispararTodoElTiempo()
-	}
-	/* 
-	method enemigosDisparar(){
-		self.enemigosEnPantalla().forEach{enemigo=>enemigo.disparar()}
+		//cada cierto tiempo aparece un enemigo aleatorio
+		
+		game.onTick(5000, "enemigoAleatorio" , {game.addVisual(self.enemigoAleatorio())})
+		//la frecuencia con la que aparece un enemigo es 5000
+		self.enemigosDisparar()
 	}
 	
-	method enemigosEnPantalla(){
-		return game.allVisuals().filter{objeto=>objeto.tipo()=="enemigo"}
+	method enemigoAleatorio(){
+		//lista de los posibles enemigos a aparecer
+		const enemigo = [new NavePequenia(), new NaveMediana(), new NaveGrande()]
+		
+		return enemigo.anyOne()
 	}
-	* 
-	*/
+	
+	//tuve que activar los ultimos 2 metodos para mandarles instrucciones a todos los enemigos en pantalla
+	method enemigosDisparar(){
+		self.enemigosEnPantalla().forEach{enemigos=>enemigos.disparar()}
+	}
+	
+	method enemigosEnPantalla(){//este metodo utiliza el tipo "enemigo" para hacer que todos disparen
+		return game.allVisuals().filter{objeto=>objeto.tipo()=="enemigo"}
+		//tuve que hacer que el resto de objetos tambien entendieran el mensaje tipo() para evitar que rompan el programa
+	}
+	
+	
 }
 
