@@ -30,7 +30,6 @@ object config {
 		
 		game.onTick(5000, "enemigoAleatorio" , {game.addVisual(self.enemigoAleatorio())})
 		//la frecuencia con la que aparece un enemigo es 5000
-		self.enemigosDisparar()
 	}
 	
 	method enemigoAleatorio(){
@@ -48,6 +47,7 @@ object config {
 	method enemigosEnPantalla(){//este metodo utiliza el tipo "enemigo" para hacer que todos disparen
 		return game.allVisuals().filter{objeto=>objeto.tipo()=="enemigo"}
 		//tuve que hacer que el resto de objetos tambien entendieran el mensaje tipo() para evitar que rompan el programa
+	
 	}
 	
 	
