@@ -66,14 +66,14 @@ class NaveGrande {
 	
 }
 
-class Jugador {
+object jugador {
 	var property vida = 1000
 	const property tipo = "jugador"
-	
-	method position() {
-		//habría que ponerle una posición fija dentro de la pantalla de inicio
-		return game.at(0,25)
-	}
+	var property position = game.at(0,25)
+//	method position() {
+//		//habría que ponerle una posición fija dentro de la pantalla de inicio
+//		return game.at(0,25)
+//	}
 	
 	method image() {
 		return "player1.png"
@@ -85,4 +85,7 @@ class Jugador {
 		disparo.moverse()
 	}
 	
+	method irA(posicion){
+		position = posicion
+	}
 }
