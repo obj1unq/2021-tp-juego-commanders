@@ -21,7 +21,7 @@ class Disparo {
 	method moverse(){
 		//modifique un poco el comportamiento de los disparos para que desaparescan antes de salir de la pantalla
 		game.onTick(50,"Movimiento Disparo", {
-			if (self.position().x() <= 1) {
+			if (self.position().x() <= -10) {
 				self.desactivarDisparo()
 			}
 			else {
