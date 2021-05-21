@@ -6,8 +6,8 @@ import ataques.*
 //Main
 program juego {
 	game.title("commanders")
-	game.height(10) //alto
-	game.width(20) //ancho
+	game.height(10) // alto
+	game.width(20) // ancho
 	game.boardGround("fondo.png")
 	game.cellSize(50) // ajustar el tamaño de pixeles de celda	
 	nivel1.iniciar()

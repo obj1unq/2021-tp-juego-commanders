@@ -2,31 +2,31 @@ import wollok.game.*
 import enemigos.*
 
 object nivel1 {
-	method iniciar(){
+
+	method iniciar() {
 		game.clear()
-		game.addVisual(jugador)//jugador está en el wlk de enemigos... lo puse ahí para probarlo
-		
+		game.addVisual(jugador) // jugador está en el wlk de enemigos... lo puse ahí para probarlo
 		config.configuracionTeclas()
 		config.aparicionEnemigosAleatorios()
 	}
+
 }
 
 object config {
-	
-	method configuracionTeclas(){
-		keyboard.w().onPressDo({jugador.irA(jugador.position().up(1))})
-		keyboard.s().onPressDo({jugador.irA(jugador.position().down(1))})
-		keyboard.a().onPressDo({jugador.irA(jugador.position().left(1))})
-		keyboard.d().onPressDo({jugador.irA(jugador.position().right(1))})
-		keyboard.space().onPressDo({/* */})//Tecla para el disparo del jugador.
-	}
-	
-	method aparicionEnemigosAleatorios(){
-		//cada cierto tiempo aparece un enemigo aleatorio
-		game.onTick(2000, "enemigoAleatorio" , {
-			hangar.generarEnemigoSiSeRequiere()
-		})
 
+	method configuracionTeclas() {
+		keyboard.w().onPressDo({ jugador.irA(jugador.position().up(1))})
+		keyboard.s().onPressDo({ jugador.irA(jugador.position().down(1))})
+		keyboard.a().onPressDo({ jugador.irA(jugador.position().left(1))})
+		keyboard.d().onPressDo({ jugador.irA(jugador.position().right(1))})
+		keyboard.space().onPressDo({ /* */
+		}) // Tecla para el disparo del jugador.
 	}
+
+	method aparicionEnemigosAleatorios() {
+		// cada cierto tiempo aparece un enemigo aleatorio
+		game.onTick(2000, "enemigoAleatorio", { hangar.generarEnemigoSiSeRequiere()})
+	}
+
 }
 
