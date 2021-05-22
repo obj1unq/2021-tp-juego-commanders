@@ -27,7 +27,12 @@ object hangar {
 	const enemigos = [new NavePequenia(), new NaveMediana(), new NaveGrande()]
 		return enemigos.anyOne()
 	}
-
+	
+	method eliminarEnemigosPerdidos() {
+		const enemigosPerdidos = enemigosEnJuego.filter{enemigo => enemigo.position().x() <= -10}
+		enemigosPerdidos.forEach{enemigo => enemigo.desaparecer()}
+		enemigosEnJuego.removeAll(enemigosPerdidos)
+	}
 }
 
 class NavePequenia {
@@ -49,7 +54,7 @@ class NavePequenia {
 	}
 	
 	method movimiento() {
-		game.onTick(100, "EnemigoEnMovimiento", {self.moverseSiEstaEnPantalla()})
+		game.onTick(300, "EnemigoEnMovimiento", {self.moverseSiEstaEnPantalla()})
 	}
 
 	method moverseSiEstaEnPantalla() {
@@ -94,7 +99,7 @@ class NaveMediana {
 	}
 
 	method movimiento() {
-		game.onTick(100, "enemigoEnMovimiento", { self.moverseSiEstaEnPantalla()})
+		game.onTick(300, "enemigoEnMovimiento", { self.moverseSiEstaEnPantalla()})
 	}
 
 	method moverseSiEstaEnPantalla() {
@@ -138,7 +143,7 @@ class NaveGrande {
 	}
 	
 	method movimiento() {
-		game.onTick(100, "enemigoEnMovimiento", { self.moverseSiEstaEnPantalla()})
+		game.onTick(300, "enemigoEnMovimiento", { self.moverseSiEstaEnPantalla()})
 	}
 
 	method moverseSiEstaEnPantalla() {

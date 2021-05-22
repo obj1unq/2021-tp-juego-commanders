@@ -11,9 +11,9 @@ object gestorDeDisparos{
 	}
 	
 	method eliminarBalasPerdidas(){
-		const balasPerdidas = disparosActivos.filter{disparo => disparo.position().x() <= -1}
+		const balasPerdidas = disparosActivos.filter{disparo => disparo.position().x() <= -10}
 		balasPerdidas.forEach{bala => bala.desaparecer()}
-		disparosActivos.removeAllSuchThat{disparo => disparo.position().x() <= -1}
+		disparosActivos.removeAll(balasPerdidas)
 	}
 }
 

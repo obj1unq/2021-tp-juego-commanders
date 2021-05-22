@@ -10,6 +10,7 @@ object nivel1 {
 		config.configuracionTeclas()
 		config.aparicionEnemigosAleatorios()
 		config.fixDisparos()
+		config.fixEnemigos()
 	}
 
 }
@@ -32,6 +33,10 @@ object config {
 	
 	method fixDisparos() {
 		game.onTick(5000, "eliminarBalasPerdidas", {gestorDeDisparos.eliminarBalasPerdidas()})
+	}
+	
+	method fixEnemigos() {
+		game.onTick(5000, "eliminarEnemigosPerdidos", {hangar.eliminarEnemigosPerdidos()})
 	}
 
 }
