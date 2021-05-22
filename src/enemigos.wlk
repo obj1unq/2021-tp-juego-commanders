@@ -38,6 +38,11 @@ object hangar {
 	method movimientoEnemigo() {
 		game.onTick(300, "movimiento de enemigos", {enemigosEnJuego.forEach{enemigo=>enemigo.iaMovimiento()}})
 	}
+	
+	method eliminarEnemigo(enemigo) {
+		enemigosEnJuego.remove(enemigo)
+		enemigo.desaparecer()
+	}
 }
 
 class NavePequenia {
@@ -80,6 +85,10 @@ class NavePequenia {
 	
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
+	}
+	
+	method teEncontro(jugador) {
+		jugador.chocar(self)
 	}
 }
 
@@ -125,6 +134,10 @@ class NaveMediana {
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
 	}
+	
+	method teEncontro(jugador) {
+		jugador.chocar(self)
+	}
 }
 
 class NaveGrande {
@@ -168,6 +181,10 @@ class NaveGrande {
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
 	}
+	
+	method teEncontro(jugador) {
+		jugador.chocar(self)
+	}
 
 }
 
@@ -194,6 +211,15 @@ object jugador {
 	method irA(posicion) {
 		position = posicion
 	}
-
+	
+	method recibirDisparo(disparo) {
+		vida -=disparo.damage()
+		gestorDeDisparos.eliminarDisparo(disparo)
+	}
+	
+	method chocar(nave) {
+		vida -=nave.vida()
+		hangar.eliminarEnemigo(nave)
+	}
 }
 

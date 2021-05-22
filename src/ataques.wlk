@@ -19,6 +19,11 @@ object gestorDeDisparos{
 	method movimientoDisparo() {
 		game.onTick(50, "movimiento de disparos", {disparosActivos.forEach{disparo=>disparo.iaMovimiento()}})
 	}
+	
+	method eliminarDisparo(disparo) {
+		disparosActivos.remove(disparo)
+		disparo.desaparecer()
+	}
 }
 
 class Disparo {
@@ -72,6 +77,10 @@ object lanzallamas {
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
+	}
+	
+	method teEncontro(algo) {
+		algo.recibirDisparo(self)
 	}
 
 }
