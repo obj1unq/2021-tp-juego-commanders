@@ -11,6 +11,8 @@ object nivel1 {
 		config.aparicionEnemigosAleatorios()
 		config.fixDisparos()
 		config.fixEnemigos()
+		hangar.movimientoEnemigo()
+		gestorDeDisparos.movimientoDisparo()
 	}
 
 }

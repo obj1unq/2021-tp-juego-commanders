@@ -6,14 +6,18 @@ object gestorDeDisparos{
 	method disparar(damage, posicion) {
 		const nuevoDisparo = new Disparo(damage = damage, position = posicion)
 		game.addVisual(nuevoDisparo)
-		nuevoDisparo.movimiento()
+//		nuevoDisparo.movimiento()
 		disparosActivos.add(nuevoDisparo)
 	}
 	
 	method eliminarBalasPerdidas(){
-		const balasPerdidas = disparosActivos.filter{disparo => disparo.position().x() <= -10}
+		const balasPerdidas = disparosActivos.filter{disparo => disparo.position().x() <= -1}
 		balasPerdidas.forEach{bala => bala.desaparecer()}
 		disparosActivos.removeAll(balasPerdidas)
+	}
+	
+	method movimientoDisparo() {
+		game.onTick(50, "movimiento de disparos", {disparosActivos.forEach{disparo=>disparo.iaMovimiento()}})
 	}
 }
 
@@ -36,22 +40,13 @@ class Disparo {
 		position = nuevaPosicion
 	}
 
-	method movimiento() {
-		// modifique un poco el comportamiento de los disparos para que desaparescan antes de salir de la pantalla
-		game.onTick(50, "Movimiento Disparo", { self.iaMovimiento()})
-		}
-	
-	method moverseSiEstaEnPantalla() {
-//		if(self.position().x() <= -10) {
-//			self.desaparecer()
+//	method movimiento() {
+//		// modifique un poco el comportamiento de los disparos para que desaparescan antes de salir de la pantalla
+//		game.onTick(50, "Movimiento Disparo", { self.iaMovimiento()})
 //		}
-//		else {
-			self.iaMovimiento()
-//		}
-	}
 
-	method desaparecer() { // este metodo hay que modificarlo porque tira errores
-		game.removeTickEvent("Movimiento Disparo")
+	method desaparecer() {
+//		game.removeTickEvent("Movimiento Disparo")
 		game.removeVisual(self)
 	}
 	

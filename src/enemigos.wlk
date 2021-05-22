@@ -1,5 +1,6 @@
 import wollok.game.*
 import ataques.*
+import wollok.game.*
 
 object hangar {
 
@@ -19,7 +20,7 @@ object hangar {
 		const enemigoNuevo = self.enemigoAleatorio()
 		game.addVisual(enemigoNuevo)
 		enemigoNuevo.dispararTodoElTiempo()
-		enemigoNuevo.movimiento()
+//		enemigoNuevo.movimiento()
 		enemigosEnJuego.add(enemigoNuevo)
 	}
 
@@ -29,9 +30,13 @@ object hangar {
 	}
 	
 	method eliminarEnemigosPerdidos() {
-		const enemigosPerdidos = enemigosEnJuego.filter{enemigo => enemigo.position().x() <= -10}
+		const enemigosPerdidos = enemigosEnJuego.filter{enemigo => enemigo.position().x() <= -1}
 		enemigosPerdidos.forEach{enemigo => enemigo.desaparecer()}
 		enemigosEnJuego.removeAll(enemigosPerdidos)
+	}
+	
+	method movimientoEnemigo() {
+		game.onTick(300, "movimiento de enemigos", {enemigosEnJuego.forEach{enemigo=>enemigo.iaMovimiento()}})
 	}
 }
 
@@ -46,27 +51,26 @@ class NavePequenia {
 	}
 
 	method dispararTodoElTiempo() {
-		game.onTick(500, "enemigos", { self.disparar()})
+		game.onTick(1000, "enemigos", { self.disparar()})
 	}
 
 	method disparar() {
 		gestorDeDisparos.disparar(20, self.position())
 	}
 	
-	method movimiento() {
-		game.onTick(300, "EnemigoEnMovimiento", {self.moverseSiEstaEnPantalla()})
-	}
-
-	method moverseSiEstaEnPantalla() {
-		if (self.position().x() <= -10) {
-			self.desaparecer()
-		} else {
-			self.iaMovimiento()
-		}
-	}
+//	method movimiento() {
+//		game.onTick(300, "EnemigoEnMovimiento", {self.moverseSiEstaEnPantalla()})
+//	}
+//
+//	method moverseSiEstaEnPantalla() {
+//		if (self.position().x() <= -10) {
+//			self.desaparecer()
+//		} else {
+//			self.iaMovimiento()
+//		}
+//	}
 
 	method desaparecer() {
-		game.removeTickEvent("EnemigoEnMovimiento")
 		game.removeVisual(self)
 	}
 
@@ -91,7 +95,7 @@ class NaveMediana {
 	}
 
 	method dispararTodoElTiempo() {
-		game.onTick(500, "enemigos", { self.disparar()})
+		game.onTick(1000, "enemigos", { self.disparar()})
 	}
 
 	method disparar() {
@@ -111,7 +115,6 @@ class NaveMediana {
 	}
 
 	method desaparecer() {
-		game.removeTickEvent("enemigoEnMovimiento")
 		game.removeVisual(self)
 	}
 
@@ -135,7 +138,7 @@ class NaveGrande {
 	}
 
 	method dispararTodoElTiempo() {
-		game.onTick(500, "enemigos", { self.disparar()})
+		game.onTick(1000, "enemigos", { self.disparar()})
 	}
 
 	method disparar() {
@@ -155,7 +158,6 @@ class NaveGrande {
 	}
 
 	method desaparecer() {
-		game.removeTickEvent("enemigoEnMovimiento")
 		game.removeVisual(self)
 	}
 
