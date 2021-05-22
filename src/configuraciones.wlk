@@ -8,15 +8,22 @@ object nivel1 {
 	method iniciar() {
 		game.clear()
 		game.addVisual(jugador) // jugador está en el wlk de enemigos... lo puse ahí para probarlo
+		self.configurarMecanicas()
+	}
+	method configurarMecanicas(){
 		config.configuracionTeclas()
 		config.aparicionEnemigosAleatorios()
 		config.fixDisparos()
 		config.fixEnemigos()
+		hangar.movimientoEnemigo()
+		gestorDeDisparos.movimientoDisparo()
+		config.configurarColisiones()
 	}
 
 }
 
 object config {
+	
 
 	method configuracionTeclas() {
 		keyboard.w().onPressDo({ jugador.movimientoConstanteHacia({jugador.position().up(1)})})
@@ -38,6 +45,10 @@ object config {
 	
 	method fixEnemigos() {
 		game.onTick(5000, "eliminarEnemigosPerdidos", {hangar.eliminarEnemigosPerdidos()})
+	}
+	
+	method configurarColisiones() {
+		game.onCollideDo(jugador, { algo => algo.teEncontro(jugador)})
 	}
 
 }
