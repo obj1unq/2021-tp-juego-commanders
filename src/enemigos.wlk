@@ -19,7 +19,7 @@ object hangar {
 		const enemigoNuevo = self.enemigoAleatorio()
 		game.addVisual(enemigoNuevo)
 		enemigoNuevo.dispararTodoElTiempo()
-//		enemigoNuevo.movimiento()
+		enemigoNuevo.movimiento()
 		enemigosEnJuego.add(enemigoNuevo)
 	}
 
@@ -45,17 +45,33 @@ class NavePequenia {
 	}
 
 	method disparar() {
-		// Instanciamos el disparo, lo mostramos y le damos la orden para que se mueva.
-		const disparo = new Disparo(position = self.position().left(1), damage = 20)
-		game.addVisual(disparo)
-		disparo.moverse() // (el movimiento es provisorio para despues ver como pararlo cuando este fuera del tablero
-		// sino se lagea porque empiezan a juntarse)
+		gestorDeDisparos.disparar(20, self.position())
 	}
 	
 	method movimiento() {
-		//TODO: agregarle un patron de movimiento
+		game.onTick(100, "EnemigoEnMovimiento", {self.moverseSiEstaEnPantalla()})
 	}
 
+	method moverseSiEstaEnPantalla() {
+		if (self.position().x() <= -10) {
+			self.desaparecer()
+		} else {
+			self.iaMovimiento()
+		}
+	}
+
+	method desaparecer() {
+		game.removeTickEvent("EnemigoEnMovimiento")
+		game.removeVisual(self)
+	}
+
+	method iaMovimiento() {
+		self.irA(self.position().left(1))
+	}
+	
+	method irA(nuevaPosicion) {
+		position = nuevaPosicion
+	}
 }
 
 class NaveMediana {
@@ -74,16 +90,14 @@ class NaveMediana {
 	}
 
 	method disparar() {
-		const disparo = new Disparo(position = self.position().left(1), damage = 30)
-		game.addVisual(disparo)
-		disparo.moverse()
-	}
-/*
-	method movimiento() {
-		game.onTick(100, "enemigoEnMovimiento", { self.moverse()})
+		gestorDeDisparos.disparar(20, self.position())
 	}
 
-	method moverse() {
+	method movimiento() {
+		game.onTick(100, "enemigoEnMovimiento", { self.moverseSiEstaEnPantalla()})
+	}
+
+	method moverseSiEstaEnPantalla() {
 		if (self.position().x() <= -10) {
 			self.desaparecer()
 		} else {
@@ -97,35 +111,12 @@ class NaveMediana {
 	}
 
 	method iaMovimiento() {
-		if (self.position().y() < 10 && self.direccion == "arriba") 
-			{self.irDiagonalArriba()}
-		elseif
-		(self.position().y() == 10)
-		{ self.direccion = "abajo"
-			self.irDiagonalAbajo()
-		}
-		elseif
-		(self.position() > 0 && direccion == "abajo")
-		{ self.irDiagonalAbajo()}
-		else{
-			direccion = "arriba"
-			self.irDiagonalArriba()
-		}
+		self.irA(self.position().left(1))
 	}
 	
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
 	}
-	
-	method irDiagonalArriba() {
-		self.irA(game.at(self.position().x()-1, self.position().y()+1))
-	}
-	
-	method irDiagonalAbajo() {
-		self.irA(game.at(self.position().x()-1, self.position().y()-1))
-	}
-	* 
-	*/
 }
 
 class NaveGrande {
@@ -143,13 +134,32 @@ class NaveGrande {
 	}
 
 	method disparar() {
-		const disparo = new Disparo(position = self.position().left(1), damage = 20)
-		game.addVisual(disparo)
-		disparo.moverse()
+		gestorDeDisparos.disparar(20, self.position())
 	}
 	
 	method movimiento() {
-		//TODO: agregarle un patron de movimiento
+		game.onTick(100, "enemigoEnMovimiento", { self.moverseSiEstaEnPantalla()})
+	}
+
+	method moverseSiEstaEnPantalla() {
+		if (self.position().x() <= -10) {
+			self.desaparecer()
+		} else {
+			self.iaMovimiento()
+		}
+	}
+
+	method desaparecer() {
+		game.removeTickEvent("enemigoEnMovimiento")
+		game.removeVisual(self)
+	}
+
+	method iaMovimiento() {
+		self.irA(self.position().left(1))
+	}
+	
+	method irA(nuevaPosicion) {
+		position = nuevaPosicion
 	}
 
 }
@@ -168,11 +178,11 @@ object jugador {
 		return "player1.png"
 	}
 
-	method disparar() {
-		const disparo = new Disparo(position = self.position().left(10), damage = 20)
-		game.addVisual(disparo)
-		disparo.moverse()
-	}
+//	method disparar() {
+//		const disparo = new Disparo(position = self.position().left(10), damage = 20)
+//		game.addVisual(disparo)
+//		disparo.moverse()
+//	}
 
 	method irA(posicion) {
 		position = posicion

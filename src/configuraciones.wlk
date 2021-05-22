@@ -1,5 +1,6 @@
 import wollok.game.*
 import enemigos.*
+import ataques.*
 
 object nivel1 {
 
@@ -8,6 +9,7 @@ object nivel1 {
 		game.addVisual(jugador) // jugador está en el wlk de enemigos... lo puse ahí para probarlo
 		config.configuracionTeclas()
 		config.aparicionEnemigosAleatorios()
+		config.fixDisparos()
 	}
 
 }
@@ -26,6 +28,10 @@ object config {
 	method aparicionEnemigosAleatorios() {
 		// cada cierto tiempo aparece un enemigo aleatorio
 		game.onTick(2000, "enemigoAleatorio", { hangar.generarEnemigoSiSeRequiere()})
+	}
+	
+	method fixDisparos() {
+		game.onTick(5000, "eliminarBalasPerdidas", {gestorDeDisparos.eliminarBalasPerdidas()})
 	}
 
 }
