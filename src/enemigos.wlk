@@ -87,8 +87,8 @@ class NavePequenia {
 		position = nuevaPosicion
 	}
 	
-	method teEncontro(jugador) {
-		jugador.chocar(self)
+	method teEncontro(algo) {
+		algo.chocar(self)
 	}
 }
 
@@ -135,8 +135,8 @@ class NaveMediana {
 		position = nuevaPosicion
 	}
 	
-	method teEncontro(jugador) {
-		jugador.chocar(self)
+	method teEncontro(algo) {
+		algo.chocar(self)
 	}
 }
 
@@ -182,8 +182,8 @@ class NaveGrande {
 		position = nuevaPosicion
 	}
 	
-	method teEncontro(jugador) {
-		jugador.chocar(self)
+	method teEncontro(algo) {
+		algo.chocar(self)
 	}
 
 }
