@@ -169,29 +169,5 @@ class NaveGrande {
 
 }
 
-object jugador {
 
-	var property vida = 1000
-	const property tipo = "jugador"
-	var property position = game.at(0, 8)
-
-//	method position() {
-//		//habría que ponerle una posición fija dentro de la pantalla de inicio
-//		return game.at(0,25)
-//	}
-	method image() {
-		return "player1.png"
-	}
-
-//	method disparar() {
-//		const disparo = new Disparo(position = self.position().left(10), damage = 20)
-//		game.addVisual(disparo)
-//		disparo.moverse()
-//	}
-
-	method irA(posicion) {
-		position = posicion
-	}
-
-}
 

@@ -1,5 +1,6 @@
 import wollok.game.*
-import enemigos.*
+import hangarEnemigo.*
+import hangarDelJugador.*
 import ataques.*
 
 object nivel1 {
@@ -18,10 +19,10 @@ object nivel1 {
 object config {
 
 	method configuracionTeclas() {
-		keyboard.w().onPressDo({ jugador.irA(jugador.position().up(1))})
-		keyboard.s().onPressDo({ jugador.irA(jugador.position().down(1))})
-		keyboard.a().onPressDo({ jugador.irA(jugador.position().left(1))})
-		keyboard.d().onPressDo({ jugador.irA(jugador.position().right(1))})
+		keyboard.w().onPressDo({ jugador.movimientoConstanteHacia({jugador.position().up(1)})})
+		keyboard.s().onPressDo({ jugador.movimientoConstanteHacia({jugador.position().down(1)})})
+		keyboard.a().onPressDo({ jugador.movimientoConstanteHacia({jugador.position().left(1)})})
+		keyboard.d().onPressDo({ jugador.movimientoConstanteHacia({jugador.position().rigth(1)})})
 		keyboard.space().onPressDo({ /* */
 		}) // Tecla para el disparo del jugador.
 	}
