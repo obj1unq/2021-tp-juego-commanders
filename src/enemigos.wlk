@@ -66,16 +66,9 @@ class NavePequenia {
 	method movimiento() {
 		game.onTick(300, "EnemigoEnMovimiento", {self.moverseSiEstaEnPantalla()})
 	}
-//
-//	method moverseSiEstaEnPantalla() {
-//		if (self.position().x() <= -10) {
-//			self.desaparecer()
-//		} else {
-//			self.iaMovimiento()
-//		}
-//	}
 
 	method desaparecer() {
+		position = game.at(-800,0)
 		game.removeVisual(self)
 	}
 
@@ -132,6 +125,7 @@ class NaveMediana {
 	}
 
 	method desaparecer() {
+		position = game.at(-800,0)
 		game.removeVisual(self)
 	}
 
@@ -179,6 +173,7 @@ class NaveGrande {
 	}
 
 	method desaparecer() {
+		position = game.at(-800,0)
 		game.removeVisual(self)
 	}
 
@@ -195,43 +190,3 @@ class NaveGrande {
 	}
 
 }
-
-//object jugador {
-//
-//	var property vida = 1000
-//	const property tipo = "jugador"
-//	var property position = game.at(0, 8)
-//
-////	method position() {
-////		//habría que ponerle una posición fija dentro de la pantalla de inicio
-////		return game.at(0,25)
-////	}
-//	method image() {
-//		return "player1.png"
-//	}
-//
-////	method disparar() {
-////		const disparo = new Disparo(position = self.position().left(10), damage = 20)
-////		game.addVisual(disparo)
-////		disparo.moverse()
-////	}
-//
-//	method irA(posicion) {
-//		position = posicion
-//	}
-//	
-//	method recibirDisparo(disparo) {
-//		vida -=disparo.damage()
-//		gestorDeDisparos.eliminarDisparo(disparo)
-//	}
-//	
-//	method chocar(nave) {
-//		vida -=nave.vida()
-//		hangar.eliminarEnemigo(nave)
-//	}
-//	
-//	method movimientoConstante() {
-//		game.onTick(500, "movimiento jugador", {self.irA(direccion)})
-//	}
-//}
-

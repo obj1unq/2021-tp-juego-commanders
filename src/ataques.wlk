@@ -8,14 +8,12 @@ object gestorDeDisparos{
 	method disparar(damage, posicion) {
 		const nuevoDisparo = new Disparo(damage = damage, position = posicion)
 		game.addVisual(nuevoDisparo)
-//		nuevoDisparo.movimiento()
 		disparosActivos.add(nuevoDisparo)
 	}
 	
 	method disparoJugador() {
 		const nuevoDisparoJugador = new DisparoJugador(damage = damage, position = game.at(jugador.position().x(), jugador.position().y()))
 		game.addVisual(nuevoDisparoJugador)
-//		nuevoDisparo.movimiento()
 		disparosDelJugador.add(nuevoDisparoJugador)
 	}
 	
@@ -54,18 +52,16 @@ class Disparo {
 		position = nuevaPosicion
 	}
 
-//	method movimiento() {
-//		// modifique un poco el comportamiento de los disparos para que desaparescan antes de salir de la pantalla
-//		game.onTick(50, "Movimiento Disparo", { self.iaMovimiento()})
-//		}
-
 	method desaparecer() {
-//		game.removeTickEvent("Movimiento Disparo")
 		game.removeVisual(self)
 	}
 	
 	method iaMovimiento(){
 		self.irA(self.position().left(1))
+	}
+	
+	method teEncontro(algo) {
+		algo.recibirDisparo(self)
 	}
 
 }
@@ -110,9 +106,9 @@ object lanzallamas {
 		position = nuevaPosicion
 	}
 	
-//	method teEncontro(algo) {
-//		algo.recibirDisparo(self)
-//	}
+	method teEncontro(algo) {
+		algo.recibirDisparo(self)
+	}
 
 }
 
