@@ -1,13 +1,22 @@
 import wollok.game.*
+import hangarDelJugador.*
 
 object gestorDeDisparos{
 	const disparosActivos = []
+	const disparosDelJugador = []
 	
 	method disparar(damage, posicion) {
 		const nuevoDisparo = new Disparo(damage = damage, position = posicion)
 		game.addVisual(nuevoDisparo)
 //		nuevoDisparo.movimiento()
 		disparosActivos.add(nuevoDisparo)
+	}
+	
+	method disparoJugador() {
+		const nuevoDisparoJugador = new DisparoJugador(damage = damage, position = game.at(jugador.position().x(), jugador.position().y()))
+		game.addVisual(nuevoDisparoJugador)
+//		nuevoDisparo.movimiento()
+		disparosDelJugador.add(nuevoDisparoJugador)
 	}
 	
 	method eliminarBalasPerdidas(){
@@ -61,6 +70,28 @@ class Disparo {
 
 }
 
+class DisparoJugador {
+	var property damage
+	var property position
+	const property tipo = "proyectil"
+	
+	method damage() {
+		return damage
+	}
+	
+	method image() {
+		return "bulletBlue.png"
+	}
+
+	method irA(nuevaPosicion) {
+		position = nuevaPosicion
+	}
+	
+	method iaMovimiento(){
+		self.irA(self.position().right(1))
+	}
+}
+
 object lanzallamas {
 
 	const damage = 40
@@ -79,9 +110,9 @@ object lanzallamas {
 		position = nuevaPosicion
 	}
 	
-	method teEncontro(algo) {
-		algo.recibirDisparo(self)
-	}
+//	method teEncontro(algo) {
+//		algo.recibirDisparo(self)
+//	}
 
 }
 

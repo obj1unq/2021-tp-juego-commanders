@@ -2,6 +2,7 @@ import wollok.game.*
 import hangarEnemigo.*
 import hangarDelJugador.*
 import ataques.*
+import enemigos.*
 
 object nivel1 {
 
@@ -26,12 +27,12 @@ object config {
 	
 
 	method configuracionTeclas() {
-		keyboard.w().onPressDo({ jugador.movimientoConstanteHacia({jugador.position().up(1)})})
-		keyboard.s().onPressDo({ jugador.movimientoConstanteHacia({jugador.position().down(1)})})
-		keyboard.a().onPressDo({ jugador.movimientoConstanteHacia({jugador.position().left(1)})})
-		keyboard.d().onPressDo({ jugador.movimientoConstanteHacia({jugador.position().rigth(1)})})
-		keyboard.space().onPressDo({ /* */
-		}) // Tecla para el disparo del jugador.
+		keyboard.w().onPressDo({ jugador.irA(jugador.position().up(1))})
+		keyboard.s().onPressDo({ jugador.irA(jugador.position().down(1))})
+		keyboard.a().onPressDo({ jugador.irA(jugador.position().left(1))})
+		keyboard.d().onPressDo({ jugador.irA(jugador.position().right(1))})
+//		keyboard.space().onPressDo({ jugador.disparar() }) // Tecla para el disparo del jugador.
+//		hay que cambiar esto porque rompe al tocar espacio
 	}
 
 	method aparicionEnemigosAleatorios() {

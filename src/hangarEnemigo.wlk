@@ -1,39 +1,42 @@
 import wollok.game.*
 import ataques.*
 
-object hangar {
-
-	const property enemigosEnJuego = []
-
-	method generarEnemigoSiSeRequiere() {
-		if (self.seRequiereEnemigo()) {
-			self.generarEnemigo()
-		}
-	}
-
-	method seRequiereEnemigo() {
-		return game.allVisuals().filter{ objeto => objeto.tipo() == "enemigo" }.size() <= 5
-	}
-
-	method generarEnemigo() {
-		const enemigoNuevo = self.enemigoAleatorio()
-		game.addVisual(enemigoNuevo)
-		enemigoNuevo.dispararTodoElTiempo()
-		enemigoNuevo.movimiento()
-		enemigosEnJuego.add(enemigoNuevo)
-	}
-
-	method enemigoAleatorio() {
-	const enemigos = [new NavePequenia(), new NaveMediana(), new NaveGrande()]
-		return enemigos.anyOne()
-	}
-	
-	method eliminarEnemigosPerdidos() {
-		const enemigosPerdidos = enemigosEnJuego.filter{enemigo => enemigo.position().x() <= -10}
-		enemigosPerdidos.forEach{enemigo => enemigo.desaparecer()}
-		enemigosEnJuego.removeAll(enemigosPerdidos)
-	}
-}
+//object hangar {
+//
+//	const property enemigosEnJuego = []
+//
+//	method generarEnemigoSiSeRequiere() {
+//		if (self.seRequiereEnemigo()) {
+//			self.generarEnemigo()
+//		}
+//	}
+//
+//	method seRequiereEnemigo() {
+//		return game.allVisuals().filter{ objeto => objeto.tipo() == "enemigo" }.size() <= 5
+//	}
+//
+//	method generarEnemigo() {
+//		const enemigoNuevo = self.enemigoAleatorio()
+//		game.addVisual(enemigoNuevo)
+//		enemigoNuevo.dispararTodoElTiempo()
+//		enemigoNuevo.movimiento()
+//		enemigosEnJuego.add(enemigoNuevo)
+//	}
+//
+//	method enemigoAleatorio() {
+//	const enemigos = [new NavePequenia(), new NaveMediana(), new NaveGrande()]
+//		return enemigos.anyOne()
+//	}
+//	
+//	method eliminarEnemigosPerdidos() {
+//		const enemigosPerdidos = enemigosEnJuego.filter{enemigo => enemigo.position().x() <= -10}
+//		enemigosPerdidos.forEach{enemigo => enemigo.desaparecer()}
+//		enemigosEnJuego.removeAll(enemigosPerdidos)
+//	}
+//	method movimientoEnemigo() {
+//		//TODO: Código autogenerado 
+//	}
+//}
 
 class NavePequenia {
 

@@ -20,7 +20,7 @@ object hangar {
 		const enemigoNuevo = self.enemigoAleatorio()
 		game.addVisual(enemigoNuevo)
 		enemigoNuevo.dispararTodoElTiempo()
-//		enemigoNuevo.movimiento()
+		enemigoNuevo.movimiento()
 		enemigosEnJuego.add(enemigoNuevo)
 	}
 
@@ -63,9 +63,9 @@ class NavePequenia {
 		gestorDeDisparos.disparar(20, self.position())
 	}
 	
-//	method movimiento() {
-//		game.onTick(300, "EnemigoEnMovimiento", {self.moverseSiEstaEnPantalla()})
-//	}
+	method movimiento() {
+		game.onTick(300, "EnemigoEnMovimiento", {self.moverseSiEstaEnPantalla()})
+	}
 //
 //	method moverseSiEstaEnPantalla() {
 //		if (self.position().x() <= -10) {
@@ -89,6 +89,14 @@ class NavePequenia {
 	
 	method teEncontro(algo) {
 		algo.chocar(self)
+	}
+	
+	method moverseSiEstaEnPantalla() {
+		if (self.position().x() <= -10) {
+			self.desaparecer()
+		} else {
+			self.iaMovimiento()
+		}
 	}
 }
 
@@ -147,7 +155,7 @@ class NaveGrande {
 	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
 
 	method image() {
-		return "nave-grande.png"
+		return "muro.png"
 	}
 
 	method dispararTodoElTiempo() {
@@ -188,38 +196,42 @@ class NaveGrande {
 
 }
 
-object jugador {
-
-	var property vida = 1000
-	const property tipo = "jugador"
-	var property position = game.at(0, 8)
-
-//	method position() {
-//		//habría que ponerle una posición fija dentro de la pantalla de inicio
-//		return game.at(0,25)
+//object jugador {
+//
+//	var property vida = 1000
+//	const property tipo = "jugador"
+//	var property position = game.at(0, 8)
+//
+////	method position() {
+////		//habría que ponerle una posición fija dentro de la pantalla de inicio
+////		return game.at(0,25)
+////	}
+//	method image() {
+//		return "player1.png"
 //	}
-	method image() {
-		return "player1.png"
-	}
-
-//	method disparar() {
-//		const disparo = new Disparo(position = self.position().left(10), damage = 20)
-//		game.addVisual(disparo)
-//		disparo.moverse()
+//
+////	method disparar() {
+////		const disparo = new Disparo(position = self.position().left(10), damage = 20)
+////		game.addVisual(disparo)
+////		disparo.moverse()
+////	}
+//
+//	method irA(posicion) {
+//		position = posicion
 //	}
-
-	method irA(posicion) {
-		position = posicion
-	}
-	
-	method recibirDisparo(disparo) {
-		vida -=disparo.damage()
-		gestorDeDisparos.eliminarDisparo(disparo)
-	}
-	
-	method chocar(nave) {
-		vida -=nave.vida()
-		hangar.eliminarEnemigo(nave)
-	}
-}
+//	
+//	method recibirDisparo(disparo) {
+//		vida -=disparo.damage()
+//		gestorDeDisparos.eliminarDisparo(disparo)
+//	}
+//	
+//	method chocar(nave) {
+//		vida -=nave.vida()
+//		hangar.eliminarEnemigo(nave)
+//	}
+//	
+//	method movimientoConstante() {
+//		game.onTick(500, "movimiento jugador", {self.irA(direccion)})
+//	}
+//}
 
