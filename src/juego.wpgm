@@ -1,8 +1,8 @@
 import wollok.game.*
-import hangarEnemigo.*
 import hangarDelJugador.*
 import configuraciones.*
 import ataques.*
+import enemigos.*
 
 //Main
 program juego {

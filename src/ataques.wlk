@@ -1,36 +1,37 @@
 import wollok.game.*
 import hangarDelJugador.*
 
-object gestorDeDisparos{
+object gestorDeDisparos {
+
 	const disparosActivos = []
-//	const disparosDelJugador = []
-	
+
 	method disparar(damage, posicion) {
 		const nuevoDisparo = new Disparo(damage = damage, position = posicion)
 		game.addVisual(nuevoDisparo)
 		disparosActivos.add(nuevoDisparo)
 	}
-	
+
 	method disparoJugador(damage, position) {
 		const nuevoDisparoJugador = new DisparoJugador(damage = damage, position = position)
 		game.addVisual(nuevoDisparoJugador)
 		disparosActivos.add(nuevoDisparoJugador)
 	}
-	
-	method eliminarBalasPerdidas(){
-		const balasPerdidas = disparosActivos.filter{disparo => disparo.position().x() <= -1}
-		balasPerdidas.forEach{bala => bala.desaparecer()}
+
+	method eliminarBalasPerdidas() {
+		const balasPerdidas = disparosActivos.filter{ disparo => disparo.position().x() <= -1 }
+		balasPerdidas.forEach{ bala => bala.desaparecer()}
 		disparosActivos.removeAll(balasPerdidas)
 	}
-	
+
 	method movimientoDisparo() {
-		game.onTick(50, "movimiento de disparos", {disparosActivos.forEach{disparo=>disparo.iaMovimiento()}})
+		game.onTick(50, "movimiento de disparos", { disparosActivos.forEach{ disparo => disparo.iaMovimiento()}})
 	}
-	
+
 	method eliminarDisparo(disparo) {
 		disparosActivos.remove(disparo)
 		disparo.desaparecer()
 	}
+
 }
 
 class Disparo {
@@ -55,11 +56,11 @@ class Disparo {
 	method desaparecer() {
 		game.removeVisual(self)
 	}
-	
-	method iaMovimiento(){
+
+	method iaMovimiento() {
 		self.irA(self.position().left(1))
 	}
-	
+
 	method teEncontro(algo) {
 		algo.recibirDisparo(self)
 	}
@@ -67,14 +68,15 @@ class Disparo {
 }
 
 class DisparoJugador {
+
 	var property damage
 	var property position
 	const property tipo = "proyectil"
-	
+
 	method damage() {
 		return damage
 	}
-	
+
 	method image() {
 		return "bulletBlue.png"
 	}
@@ -82,14 +84,14 @@ class DisparoJugador {
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
 	}
-	
-	method iaMovimiento(){
+
+	method iaMovimiento() {
 		self.irA(self.position().right(1))
 	}
-	
+
 	method teEncontro(algo) {
-		
 	}
+
 }
 
 object lanzallamas {
@@ -109,7 +111,7 @@ object lanzallamas {
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
 	}
-	
+
 	method teEncontro(algo) {
 		algo.recibirDisparo(self)
 	}
