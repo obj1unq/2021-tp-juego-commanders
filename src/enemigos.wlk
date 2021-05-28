@@ -44,20 +44,14 @@ object hangar {
 	}
 }
 
-class NavePequenia {
-
-	var property vida = 100
+class Nave {
 	const property tipo = "enemigo"
 	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
-
-	method image() {
-		return "nave-chica.png"
-	}
-
+	
 	method dispararTodoElTiempo() {
 		game.onTick(1000, "enemigos", { self.disparar()})
 	}
-
+	
 	method disparar() {
 		gestorDeDisparos.disparar(20, self.position())
 	}
@@ -66,7 +60,7 @@ class NavePequenia {
 		position = game.at(-800,0)
 		game.removeVisual(self)
 	}
-
+	
 	method iaMovimiento() {
 		self.irA(self.position().left(1))
 	}
@@ -88,92 +82,30 @@ class NavePequenia {
 	}
 }
 
-class NaveMediana {
+class NavePequenia inherits Nave {
+
+	var property vida = 100
+	
+	method image() {
+		return "nave-chica.png"
+	}
+}
+
+class NaveMediana inherits Nave {
 
 	var property vida = 250
-	const property tipo = "enemigo"
-	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
 	var property direccion = "arriba"
 
 	method image() {
 		return "nave-mediana.png"
 	}
-
-	method dispararTodoElTiempo() {
-		game.onTick(1000, "enemigos", { self.disparar()})
-	}
-
-	method disparar() {
-		gestorDeDisparos.disparar(20, self.position())
-	}
-	
-	method moverseSiEstaEnPantalla() {
-		if (self.position().x() <= -10) {
-			self.desaparecer()
-		} else {
-			self.iaMovimiento()
-		}
-	}
-
-	method desaparecer() {
-		position = game.at(-800,0)
-		game.removeVisual(self)
-	}
-
-	method iaMovimiento() {
-		self.irA(self.position().left(1))
-	}
-	
-	method irA(nuevaPosicion) {
-		position = nuevaPosicion
-	}
-	
-	method teEncontro(algo) {
-		algo.chocar(self)
-	}
 }
 
-class NaveGrande {
+class NaveGrande inherits Nave {
 
 	var property vida = 500
-	const property tipo = "enemigo"
-	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
-
+	
 	method image() {
 		return "nave-grande.png"
 	}
-
-	method dispararTodoElTiempo() {
-		game.onTick(1000, "enemigos", { self.disparar()})
-	}
-
-	method disparar() {
-		gestorDeDisparos.disparar(20, self.position())
-	}
-	
-	method moverseSiEstaEnPantalla() {
-		if (self.position().x() <= -10) {
-			self.desaparecer()
-		} else {
-			self.iaMovimiento()
-		}
-	}
-
-	method desaparecer() {
-		position = game.at(-800,0)
-		game.removeVisual(self)
-	}
-
-	method iaMovimiento() {
-		self.irA(self.position().left(1))
-	}
-	
-	method irA(nuevaPosicion) {
-		position = nuevaPosicion
-	}
-	
-	method teEncontro(algo) {
-		algo.chocar(self)
-	}
-
 }
