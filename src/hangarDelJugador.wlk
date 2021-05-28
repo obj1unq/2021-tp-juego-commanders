@@ -27,7 +27,17 @@ object jugador {
 	}
 
 	method irA(nuevaPosicion) {
-		position = nuevaPosicion
+		if (self.posicionDentroDePantalla(nuevaPosicion)) {
+		position = nuevaPosicion			
+		}
+	}
+	
+	method posicionDentroDePantalla(posicion) {
+		return (posicion.x()>=0 && 
+				posicion.x()<=19 &&
+				posicion.y()>=0 &&
+				posicion.y()<=9
+		)
 	}
 
 	method movimientoConstanteHacia(direccion) {
