@@ -1,6 +1,5 @@
 import wollok.game.*
 import ataques.*
-import wollok.game.*
 
 object hangar {
 
@@ -24,7 +23,11 @@ object hangar {
 	}
 
 	method enemigoAleatorio() {
-		const enemigos = [ new NavePequenia(), new NaveMediana(), new NaveGrande() ]
+		const enemigos = [ 	new NavePequenia(),
+							new NavePequenia(),
+							new NavePequenia(),
+							new NaveMediana(),
+							new NaveGrande()]
 		return enemigos.anyOne()
 	}
 
@@ -91,22 +94,90 @@ class Nave {
 class NavePequenia inherits Nave {
 
 	var property vida = 100
+	var property direccion = "arriba"
 
 	method image() {
 		return "nave-chica.png"
 	}
-
+	
+	override method iaMovimiento() {
+		self.cambiarDireccionSiEsNecesario()
+		self.irA(game.at(self.position().x()-1, self.direccionActual()))
+	}
+	
+	method direccionActual() {
+		if (direccion == "arriba") {
+			return self.position().y()+1
+		}
+		else if (direccion == "abajo") {
+			return self.position().y()-1
+		}
+		else {
+			return 666 // esto nunca va a pasar
+		}
+		
+	}
+	
+	method cambiarDireccionSiEsNecesario() {
+		if (self.position().y()>=9) {
+			direccion = "abajo"
+		}
+		else if (self.position().y()<=0) {
+			direccion = "arriba"
+		}
+	}
 }
 
 class NaveMediana inherits Nave {
 
 	var property vida = 250
 	var property direccion = "arriba"
+	var property contadorDePasos = 5
 
 	method image() {
 		return "nave-mediana.png"
 	}
-
+	
+	override method iaMovimiento() {
+		if (self.estaEnBorde() && contadorDePasos > 0) {
+			self.irA(self.position().left(1))
+			contadorDePasos -= 1
+		}
+		else if (contadorDePasos == 0) {
+			self.cambiarDireccion()
+			self.irA(self.direccionActual())
+			contadorDePasos = 5
+		}
+		else {
+			self.irA(self.direccionActual())
+		}
+	}
+	
+	method direccionActual() {
+		if (direccion == "arriba") {
+			return game.at(self.position().x(),self.position().y()+1)
+		}
+		else if (direccion == "abajo") {
+			return game.at(self.position().x(),self.position().y()-1)
+		}
+		else {
+			return game.at(666,666) // esto nunca va a pasar
+		}
+	}
+	
+	method cambiarDireccion() {
+		if (direccion == "arriba"){
+			direccion = "abajo"
+		}
+		else {
+			direccion ="arriba"
+		}
+	}
+	
+	method estaEnBorde() {
+		return 	self.position().y()<=0 ||
+				self.position().y()>=9
+	}
 }
 
 class NaveGrande inherits Nave {
