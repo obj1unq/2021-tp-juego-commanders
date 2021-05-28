@@ -20,7 +20,6 @@ object hangar {
 		const enemigoNuevo = self.enemigoAleatorio()
 		game.addVisual(enemigoNuevo)
 		enemigoNuevo.dispararTodoElTiempo()
-		enemigoNuevo.movimiento()
 		enemigosEnJuego.add(enemigoNuevo)
 	}
 
@@ -63,10 +62,6 @@ class NavePequenia {
 		gestorDeDisparos.disparar(20, self.position())
 	}
 	
-	method movimiento() {
-		game.onTick(300, "EnemigoEnMovimiento", {self.moverseSiEstaEnPantalla()})
-	}
-
 	method desaparecer() {
 		position = game.at(-800,0)
 		game.removeVisual(self)
@@ -111,11 +106,7 @@ class NaveMediana {
 	method disparar() {
 		gestorDeDisparos.disparar(20, self.position())
 	}
-
-	method movimiento() {
-		game.onTick(300, "enemigoEnMovimiento", { self.moverseSiEstaEnPantalla()})
-	}
-
+	
 	method moverseSiEstaEnPantalla() {
 		if (self.position().x() <= -10) {
 			self.desaparecer()
@@ -149,7 +140,7 @@ class NaveGrande {
 	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
 
 	method image() {
-		return "muro.png"
+		return "nave-grande.png"
 	}
 
 	method dispararTodoElTiempo() {
@@ -160,10 +151,6 @@ class NaveGrande {
 		gestorDeDisparos.disparar(20, self.position())
 	}
 	
-	method movimiento() {
-		game.onTick(300, "enemigoEnMovimiento", { self.moverseSiEstaEnPantalla()})
-	}
-
 	method moverseSiEstaEnPantalla() {
 		if (self.position().x() <= -10) {
 			self.desaparecer()

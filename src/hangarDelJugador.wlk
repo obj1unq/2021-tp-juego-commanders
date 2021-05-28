@@ -8,6 +8,8 @@ object jugador {
 	var property vida = 1000
 	const property tipo = "jugador"
 	var property position = game.at(0, 8)
+	const property damage = 100
+	
 //	const direcciones = [arriba = {self.position().up(1)},]
 	 
 //	const abajo = {jugador.position().down(1)}
@@ -24,7 +26,7 @@ object jugador {
 	}
 
 	method disparar() {
-		gestorDeDisparos.disparoJugador()
+		gestorDeDisparos.disparoJugador(self.damage(), self.position())
 	}
 
 	method irA(nuevaPosicion) {

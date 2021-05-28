@@ -31,7 +31,7 @@ object config {
 		keyboard.s().onPressDo({ jugador.irA(jugador.position().down(1))})
 		keyboard.a().onPressDo({ jugador.irA(jugador.position().left(1))})
 		keyboard.d().onPressDo({ jugador.irA(jugador.position().right(1))})
-//		keyboard.space().onPressDo({ jugador.disparar() }) // Tecla para el disparo del jugador.
+		keyboard.space().onPressDo({ jugador.disparar() }) // Tecla para el disparo del jugador.
 //		hay que cambiar esto porque rompe al tocar espacio
 	}
 

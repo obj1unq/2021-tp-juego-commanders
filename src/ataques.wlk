@@ -3,7 +3,7 @@ import hangarDelJugador.*
 
 object gestorDeDisparos{
 	const disparosActivos = []
-	const disparosDelJugador = []
+//	const disparosDelJugador = []
 	
 	method disparar(damage, posicion) {
 		const nuevoDisparo = new Disparo(damage = damage, position = posicion)
@@ -11,10 +11,10 @@ object gestorDeDisparos{
 		disparosActivos.add(nuevoDisparo)
 	}
 	
-	method disparoJugador() {
-		const nuevoDisparoJugador = new DisparoJugador(damage = damage, position = game.at(jugador.position().x(), jugador.position().y()))
+	method disparoJugador(damage, position) {
+		const nuevoDisparoJugador = new DisparoJugador(damage = damage, position = position)
 		game.addVisual(nuevoDisparoJugador)
-		disparosDelJugador.add(nuevoDisparoJugador)
+		disparosActivos.add(nuevoDisparoJugador)
 	}
 	
 	method eliminarBalasPerdidas(){
@@ -85,6 +85,10 @@ class DisparoJugador {
 	
 	method iaMovimiento(){
 		self.irA(self.position().right(1))
+	}
+	
+	method teEncontro(algo) {
+		
 	}
 }
 
