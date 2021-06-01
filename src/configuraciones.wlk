@@ -10,10 +10,10 @@ object config {
 	method configurarMecanicas() {
 		self.configuracionTeclas()
 		self.aparicionEnemigosAleatorios()
-		self.fixDisparos()
+//		self.fixDisparos()
 //		self.fixEnemigos()
 //		hangar.movimientoEnemigo()
-		gestorDeDisparos.movimientoDisparo()
+//		gestorDeDisparos.movimientoDisparo()
 		self.configurarColisiones()
 	}
 
@@ -32,9 +32,9 @@ object config {
 		game.onTick(2000, "enemigoAleatorio", { hangar.generarEnemigoSiSeRequiere()})
 	}
 
-	method fixDisparos() {
-		game.onTick(5000, "eliminarBalasPerdidas", { gestorDeDisparos.eliminarBalasPerdidas()})
-	}
+//	method fixDisparos() {
+//		game.onTick(5000, "eliminarBalasPerdidas", { gestorDeDisparos.eliminarBalasPerdidas()})
+//	}
 
 //	method fixEnemigos() {
 //		game.onTick(5000, "eliminarEnemigosPerdidos", { hangar.eliminarEnemigosPerdidos()})

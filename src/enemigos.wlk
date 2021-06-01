@@ -59,7 +59,10 @@ class Nave {
 	}
 
 	method disparar() {
-		gestorDeDisparos.disparar(20, self.position())
+		const disparo=new DisparoEnemigo(damage=20,position=self.position().left(1))
+		game.addVisual(disparo)
+		disparo.movimientoConstante()
+//		gestorDeDisparos.disparar(20, self.position())
 	}
 
 	method desaparecer() {
@@ -89,7 +92,7 @@ class Nave {
 	method posicionDentroDePantalla() {
 		return (position.x()>=0 && 
 				position.x()<=20 &&
-				position.y()>=0 &&
+				position.y()>=-1 &&
 				position.y()<=10
 		)
 	}

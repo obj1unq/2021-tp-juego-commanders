@@ -27,7 +27,10 @@ class Jugador {
 	}
 
 	method disparar() {
-		gestorDeDisparos.disparoJugador(self.damage(), self.position())
+		const disparoJugador = new DisparoAliado(damage=20, position=self.position().right(1))
+		game.addVisual(disparoJugador)
+		disparoJugador.movimientoConstante()
+//		gestorDeDisparos.disparoJugador(self.damage(), self.position())
 	}
 
 	method irA(nuevaPosicion) {
@@ -50,12 +53,14 @@ class Jugador {
 
 	method chocar(nave) {
 		vida -= nave.vida()
-		hangar.eliminarEnemigo(nave)
+		nave.desaparecer()
+//		hangar.eliminarEnemigo(nave)
 	}
 
 	method recibirDisparo(algo) {
 		vida -= algo.damage()
-		gestorDeDisparos.eliminarDisparo(algo)
+		algo.desaparecer()
+//		gestorDeDisparos.eliminarDisparo(algo)
 	}
 
 }
