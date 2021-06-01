@@ -3,35 +3,28 @@ import hangarDelJugador.*
 import ataques.*
 import enemigos.*
 
-object nivel1 {
-
-	method iniciar() {
-		game.clear()
-		game.addVisual(jugador) // jugador está en el wlk de enemigos... lo puse ahí para probarlo
-		self.configurarMecanicas()
-	}
-
+object config {
+		
+	const jugador = gestorDelJugador.jugadorActual()
+		
 	method configurarMecanicas() {
-		config.configuracionTeclas()
-		config.aparicionEnemigosAleatorios()
-		config.fixDisparos()
-		config.fixEnemigos()
+		self.configuracionTeclas()
+		self.aparicionEnemigosAleatorios()
+		self.fixDisparos()
+		self.fixEnemigos()
 		hangar.movimientoEnemigo()
 		gestorDeDisparos.movimientoDisparo()
-		config.configurarColisiones()
+		self.configurarColisiones()
 	}
 
-}
-
-object config {
-
 	method configuracionTeclas() {
+		
+		
 		keyboard.w().onPressDo({ jugador.irA(jugador.position().up(1))})
 		keyboard.s().onPressDo({ jugador.irA(jugador.position().down(1))})
 		keyboard.a().onPressDo({ jugador.irA(jugador.position().left(1))})
 		keyboard.d().onPressDo({ jugador.irA(jugador.position().right(1))})
-		keyboard.space().onPressDo({ jugador.disparar()}) // Tecla para el disparo del jugador.
-//		hay que cambiar esto porque rompe al tocar espacio
+		keyboard.space().onPressDo({ jugador.disparar()})
 	}
 
 	method aparicionEnemigosAleatorios() {

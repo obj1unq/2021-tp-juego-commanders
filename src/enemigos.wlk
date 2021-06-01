@@ -12,7 +12,8 @@ object hangar {
 	}
 
 	method seRequiereEnemigo() {
-		return game.allVisuals().filter{ objeto => objeto.tipo() == "enemigo" }.size() <= 5
+		return enemigosEnJuego.size() <= 3
+//		return game.allVisuals().filter{ objeto => objeto.tipo() == "enemigo" }.size() <= 3
 	}
 
 	method generarEnemigo() {
@@ -49,12 +50,13 @@ object hangar {
 }
 
 class Nave {
-
+	
+	const property id = 0.randomUpTo(10000)
 	const property tipo = "enemigo"
 	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
 
 	method dispararTodoElTiempo() {
-		game.onTick(1000, "enemigos", { self.disparar()})
+		game.onTick(1000, "enemigo"+self.nombre(), { self.disparar()})
 	}
 
 	method disparar() {
@@ -62,8 +64,12 @@ class Nave {
 	}
 
 	method desaparecer() {
-		position = game.at(-800, 0)
+		game.removeTickEvent("enemigo"+self.nombre())
 		game.removeVisual(self)
+	}
+	
+	method nombre() {
+		return id.toString()
 	}
 
 	method iaMovimiento() {
@@ -87,6 +93,10 @@ class Nave {
 		} else {
 			self.iaMovimiento()
 		}
+	}
+	
+	method nombreDelOnTick(){
+		return "enemigos"+self.nombre()
 	}
 
 }

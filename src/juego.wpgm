@@ -3,6 +3,7 @@ import hangarDelJugador.*
 import configuraciones.*
 import ataques.*
 import enemigos.*
+import niveles.*
 
 //Main
 program juego {
@@ -11,6 +12,6 @@ program juego {
 	game.width(20) // ancho
 	game.boardGround("fondo.png")
 	game.cellSize(50) // ajustar el tamaño de pixeles de celda	
-	nivel1.iniciar()
+	new Nivel().iniciar()
 	game.start()
 }

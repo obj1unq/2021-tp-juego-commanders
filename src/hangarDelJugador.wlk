@@ -3,7 +3,11 @@ import configuraciones.*
 import enemigos.*
 import ataques.*
 
-object jugador {
+object gestorDelJugador {
+	var property jugadorActual = new Jugador()
+}
+
+class Jugador {
 
 	var property vida = 1000
 	const property tipo = "jugador"
