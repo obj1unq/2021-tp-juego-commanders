@@ -20,6 +20,7 @@ object hangar {
 		const enemigoNuevo = self.enemigoAleatorio()
 		game.addVisual(enemigoNuevo)
 		enemigoNuevo.dispararTodoElTiempo()
+		enemigoNuevo.moverseTodoElTiempo()
 		enemigosEnJuego.add(enemigoNuevo)
 	}
 
@@ -32,31 +33,29 @@ object hangar {
 		return enemigos.anyOne()
 	}
 
-	method eliminarEnemigosPerdidos() {
-		const enemigosPerdidos = enemigosEnJuego.filter{ enemigo => enemigo.position().x() <= -1 }
-		enemigosPerdidos.forEach{ enemigo => enemigo.desaparecer()}
-		enemigosEnJuego.removeAll(enemigosPerdidos)
-	}
-
-	method movimientoEnemigo() {
-		game.onTick(300, "movimiento de enemigos", { enemigosEnJuego.forEach{ enemigo => enemigo.iaMovimiento()}})
-	}
+//	method eliminarEnemigosPerdidos() {
+//		const enemigosPerdidos = enemigosEnJuego.filter{ enemigo => enemigo.position().x() <= -1 }
+//		enemigosPerdidos.forEach{ enemigo => enemigo.desaparecer()}
+//		enemigosEnJuego.removeAll(enemigosPerdidos)
+//	}
+//
+//	method movimientoEnemigo() {
+//		game.onTick(300, "movimiento de enemigos", { enemigosEnJuego.forEach{ enemigo => enemigo.iaMovimiento()}})
+//	}
 
 	method eliminarEnemigo(enemigo) {
 		enemigosEnJuego.remove(enemigo)
-		enemigo.desaparecer()
 	}
 
 }
 
 class Nave {
-	
 	const property id = 0.randomUpTo(10000)
 	const property tipo = "enemigo"
 	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
 
 	method dispararTodoElTiempo() {
-		game.onTick(1000, "enemigo"+self.nombre(), { self.disparar()})
+		game.onTick(1000, "disparo"+self.nombre(), { self.disparar()})
 	}
 
 	method disparar() {
@@ -64,12 +63,35 @@ class Nave {
 	}
 
 	method desaparecer() {
-		game.removeTickEvent("enemigo"+self.nombre())
+		game.removeTickEvent("movimiento"+self.nombre())
+		game.removeTickEvent("disparo"+self.nombre())
+		hangar.eliminarEnemigo(self)
 		game.removeVisual(self)
 	}
 	
 	method nombre() {
 		return id.toString()
+	}
+	
+	method moverseTodoElTiempo(){
+		game.onTick(self.velocidad(),"movimiento"+self.nombre(), {self.movimiento()})
+	}
+	
+	method movimiento() {
+		if (self.posicionDentroDePantalla()) {
+			self.iaMovimiento()
+		}
+		else {
+			self.desaparecer()
+		}
+	}
+	
+	method posicionDentroDePantalla() {
+		return (position.x()>=0 && 
+				position.x()<=20 &&
+				position.y()>=0 &&
+				position.y()<=10
+		)
 	}
 
 	method iaMovimiento() {
@@ -78,6 +100,10 @@ class Nave {
 
 	method irA(nuevaPosicion) {
 		position = nuevaPosicion
+	}
+	
+	method velocidad() {
+		return 800
 	}
 
 	method teEncontro(algo) {
@@ -94,11 +120,6 @@ class Nave {
 			self.iaMovimiento()
 		}
 	}
-	
-	method nombreDelOnTick(){
-		return "enemigos"+self.nombre()
-	}
-
 }
 
 class NavePequenia inherits Nave {
@@ -135,6 +156,10 @@ class NavePequenia inherits Nave {
 		else if (self.position().y()<=0) {
 			direccion = "arriba"
 		}
+	}
+	
+	override method velocidad() {
+		return 300
 	}
 }
 
@@ -187,6 +212,10 @@ class NaveMediana inherits Nave {
 	method estaEnBorde() {
 		return 	self.position().y()<=0 ||
 				self.position().y()>=9
+	}
+	
+	override method velocidad() {
+		return 500
 	}
 }
 
