@@ -1,7 +1,7 @@
 import wollok.game.*
 import hangarDelJugador.*
 import configuraciones.*
-import ataques.*
+import ataques.*	
 import enemigos.*
 import niveles.*
 
@@ -10,7 +10,7 @@ program juego {
 	game.title("commanders")
 	game.height(10) // alto
 	game.width(20) // ancho
-	game.boardGround("cieloFondo.png")
+	game.boardGround("fondo3.png")
 	game.cellSize(50) // ajustar el tamaño de pixeles de celda	
 	new Nivel().iniciar()
 	game.start()
