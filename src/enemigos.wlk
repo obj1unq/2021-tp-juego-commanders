@@ -131,7 +131,7 @@ class NavePequenia inherits Nave {
 	var property direccion = "arriba"
 
 	method image() {
-		return "nave-chica.png"
+		return "naveEnemiga1.png"
 	}
 	
 	override method iaMovimiento() {
@@ -173,7 +173,7 @@ class NaveMediana inherits Nave {
 	var property contadorDePasos = 5
 
 	method image() {
-		return "nave-mediana.png"
+		return "naveEnemiga3.png"
 	}
 	
 	override method iaMovimiento() {

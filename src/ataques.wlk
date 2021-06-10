@@ -50,7 +50,7 @@ class Disparo {
 	}
 
 	method image() {
-		return "bulletBlue.png"
+		return "disparoAliado1.png"
 	}
 	
 	method nombre() {
@@ -96,6 +96,10 @@ class Disparo {
 }
 
 class DisparoEnemigo inherits Disparo {
+	
+	override method image() {
+		return "disparoEnemigo1.png"
+	}
 	
 	override method iaMovimiento() {
 		self.irA(self.position().left(1))

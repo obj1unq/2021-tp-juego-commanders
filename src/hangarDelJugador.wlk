@@ -23,7 +23,7 @@ class Jugador {
 //		return game.at(0,25)
 //	}
 	method image() {
-		return "player1.png"
+		return "naveJugador.png"
 	}
 
 	method disparar() {
