@@ -14,7 +14,7 @@ object hangar {
 	method seRequiereEnemigo() {
 		return enemigosEnJuego.size() <= 3
 //		return game.allVisuals().filter{ objeto => objeto.tipo() == "enemigo" }.size() <= 3
-	}
+	} 
 
 	method generarEnemigo() {
 		const enemigoNuevo = self.enemigoAleatorio()
@@ -49,10 +49,24 @@ object hangar {
 
 }
 
+class Sonido {
+	const property disparo = game.sound("disparo.mp3")
+	const property fondo = game.sound("musicaFondo.mp3")
+	
+	method musicaDeFondo(){
+		fondo.play()
+		game.onTick(20000, "musicaDeFondo", {
+			fondo.stop()
+			fondo.play()
+		})
+	}
+}
+
 class Nave {
 	const property id = 0.randomUpTo(10000)
 	const property tipo = "enemigo"
 	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
+//	const disparoSonido = game.sound("disparo.mp3")
 
 	method dispararTodoElTiempo() {
 		game.onTick(1000, "disparo"+self.nombre(), { self.disparar()})
@@ -61,6 +75,7 @@ class Nave {
 	method disparar() {
 		const disparo=new DisparoEnemigo(damage=20,position=self.position().left(1))
 		game.addVisual(disparo)
+		new Sonido().disparo().play()
 		disparo.movimientoConstante()
 //		gestorDeDisparos.disparar(20, self.position())
 	}
