@@ -3,7 +3,7 @@ import hangarDelJugador.*
 import configuraciones.*
 import ataques.*	
 import enemigos.*
-import niveles.*
+import niveles.* 
 
 //Main
 program juego {
