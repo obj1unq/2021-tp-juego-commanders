@@ -76,6 +76,7 @@ class Nave {
 	
 	method configurarColisiones(){
 		config.configurarColisiones(self)
+		partes.forEach({parte=>config.configurarColisiones(parte)})
 	}
 	
 	method dispararTodoElTiempo() {
@@ -159,12 +160,17 @@ class Nave {
 	}
 	
 	method perderVida(danio)
+	
+	method partes(){
+		return []
+	}
 }
 
 class NavePequenia inherits Nave {
 
 	var property vida = 100
 	var property direccion = "arriba"
+	const property partes =
 
 	method image() {
 		return "naveEnemiga1.png"
