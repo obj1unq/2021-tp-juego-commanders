@@ -106,4 +106,8 @@ class Proxy{
   method recibirDisparo(disparo){
   	original.recibirDisparo(disparo)
   }
+  
+  method teEncontro(parametro){
+  	
+  }
 }
