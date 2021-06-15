@@ -188,7 +188,7 @@ class NaveMediana inherits Nave {
 	var property contadorDePasos = 5
 
 	method image() {
-		return "naveEnemiga3.png"
+		return "naveEnemiga2.png"
 	}
 	
 	override method iaMovimiento() {
