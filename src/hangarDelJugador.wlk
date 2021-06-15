@@ -5,6 +5,10 @@ import ataques.*
 
 object gestorDelJugador {
 	var property jugadorActual = new Jugador()
+	
+	method partesDelJugador(){
+		jugadorActual.crearPartesDeLaNave()
+	}
 }
 
 class Jugador {
@@ -13,6 +17,7 @@ class Jugador {
 	const property tipo = "jugador"
 	var property position = game.at(0, 8)
 	const property damage = 100
+	const property partes = []
 
 //	const direcciones = [arriba = {self.position().up(1)},]
 //	const abajo = {jugador.position().down(1)}
@@ -22,6 +27,16 @@ class Jugador {
 //		//habría que ponerle una posición fija dentro de la pantalla de inicio
 //		return game.at(0,25)
 //	}
+
+//	override method initialize() {
+//		self.crearPartesDeLaNave()
+//	}
+	
+	method configurarColisiones() {
+		config.configurarColisiones(self)
+		partes.forEach({parte=>config.configurarColisiones(parte)})
+	}
+
 	method image() {
 		return "naveJugador.png"
 	}
@@ -62,6 +77,33 @@ class Jugador {
 		algo.desaparecer()
 //		gestorDeDisparos.eliminarDisparo(algo)
 	}
+	
+	method crearPartesDeLaNave(){
+		self.agregarParte(1,0)
+		self.agregarParte(2,0)
+	}
+	
+	method agregarParte(x,y){
+		const parte = new Proxy(original = self, x = x, y = y)
+		game.addVisual(parte)
+		partes.add(parte)
+	}
 
 }
 
+class Proxy{
+  const original
+  const x
+  const y
+//  const position
+  method position() { 
+  	return original.position().right(x).up(y)
+  }
+  method chocar(algo) { 
+    original.chocar(algo)
+  }
+  
+  method recibirDisparo(disparo){
+  	original.recibirDisparo(disparo)
+  }
+}

@@ -14,7 +14,7 @@ object config {
 //		self.fixEnemigos()
 //		hangar.movimientoEnemigo()
 //		gestorDeDisparos.movimientoDisparo()
-		self.configurarColisiones()
+		jugador.configurarColisiones()
 	}
 
 	method configuracionTeclas() {
@@ -40,8 +40,8 @@ object config {
 //		game.onTick(5000, "eliminarEnemigosPerdidos", { hangar.eliminarEnemigosPerdidos()})
 //	}
 
-	method configurarColisiones() {
-		game.onCollideDo(jugador, { algo => algo.teEncontro(jugador)})
+	method configurarColisiones(cosa) {
+		game.onCollideDo(cosa, { algo => algo.teEncontro(cosa)})
 	}
 
 }

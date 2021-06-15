@@ -15,6 +15,7 @@ class Nivel {
 //		musica.musicaDeFondo()
 // hay que implementar el sonido de fondo, lo dejo comentado porque rompe
 		game.addVisual(jugador)
+		gestorDelJugador.partesDelJugador()
 		
 		config.configurarMecanicas()
 	}
