@@ -67,7 +67,11 @@ class Nave {
 	const property tipo = "enemigo"
 	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
 //	const disparoSonido = game.sound("disparo.mp3")
-
+	
+	override method initialize(){
+		game.onCollideDo(self, {algo=>self.teEncontro(algo)})
+	}
+	
 	method dispararTodoElTiempo() {
 		game.onTick(1000, "disparo"+self.nombre(), { self.disparar()})
 	}
@@ -81,9 +85,13 @@ class Nave {
 	}
 
 	method desaparecer() {
+		const explosion = new Explosion(position = self.position())
+		
 		game.removeTickEvent("movimiento"+self.nombre())
 		game.removeTickEvent("disparo"+self.nombre())
 		hangar.eliminarEnemigo(self)
+		game.addVisual(explosion)
+		explosion.animacion()
 		game.removeVisual(self)
 	}
 	
@@ -138,6 +146,13 @@ class Nave {
 			self.iaMovimiento()
 		}
 	}
+	
+	method recibirDisparo(disparo){
+		self.perderVida(disparo.damage())
+		disparo.desaparecer()
+	}
+	
+	method perderVida(danio)
 }
 
 class NavePequenia inherits Nave {
@@ -178,6 +193,10 @@ class NavePequenia inherits Nave {
 	
 	override method velocidad() {
 		return 300
+	}
+	
+	override method perderVida(danio){
+		vida -= danio
 	}
 }
 
@@ -235,6 +254,10 @@ class NaveMediana inherits Nave {
 	override method velocidad() {
 		return 500
 	}
+	
+	override method perderVida(danio){
+		vida -= danio
+	}
 }
 
 class NaveGrande inherits Nave {
@@ -243,6 +266,10 @@ class NaveGrande inherits Nave {
 
 	method image() {
 		return "nave-grande.png"
+	}
+	
+	override method perderVida(danio){
+		vida -= danio
 	}
 
 }

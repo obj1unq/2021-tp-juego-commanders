@@ -92,6 +92,10 @@ class Disparo {
 	method teEncontro(algo) {
 		algo.recibirDisparo(self)
 	}
+	
+	method chocar(algo){
+		algo.recibirDisparo(self)
+	}
 
 }
 
@@ -135,5 +139,63 @@ object lanzallamas {
 		algo.recibirDisparo(self)
 	}
 
+}
+
+class Explosion {
+	const property position
+	var property image = "explosion1.png"
+	const vel = 100
+	//TODO: modificar esta clase para que no lagee
+	method animacion() {
+		game.schedule(vel, {
+			image = "explosion2.png"
+			self.a1()
+		})
+	}
+	
+	method a1(){
+		game.schedule(vel, {
+			image = "explosion3.png"
+			self.a2()
+		})
+	}
+	
+	method a2(){
+		game.schedule(vel, {
+			image = "explosion4.png"
+			self.a3()
+		})
+	}
+	
+	method a3(){
+		game.schedule(vel, {
+			image = "explosion5.png"
+			self.a4()
+		})
+	}
+	
+	method a4(){
+		game.schedule(vel, {
+			image = "explosion6.png"
+			self.a5()
+		})
+	}
+	
+	method a5(){
+		game.schedule(vel, {
+			image = "explosion7.png"
+			self.a6()
+		})
+	}
+	
+	method a6(){
+		game.schedule(vel, {
+			game.removeVisual(self)
+		})
+	}
+	
+	method teEncontro(algo){
+		//no hace nada
+	}
 }
 

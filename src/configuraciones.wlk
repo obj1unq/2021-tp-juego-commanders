@@ -29,7 +29,7 @@ object config {
 
 	method aparicionEnemigosAleatorios() {
 		// cada cierto tiempo aparece un enemigo aleatorio
-		game.onTick(2000, "enemigoAleatorio", { hangar.generarEnemigoSiSeRequiere()})
+		game.onTick(4000, "enemigoAleatorio", { hangar.generarEnemigoSiSeRequiere()})
 	}
 
 //	method fixDisparos() {

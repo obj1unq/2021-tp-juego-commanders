@@ -42,7 +42,7 @@ class Jugador {
 	}
 
 	method disparar() {
-		const disparoJugador = new DisparoAliado(damage=20, position=self.position().right(1))
+		const disparoJugador = new DisparoAliado(damage=20, position=self.position().right(3))
 		game.addVisual(disparoJugador)
 		disparoJugador.movimientoConstante()
 //		gestorDeDisparos.disparoJugador(self.damage(), self.position())
