@@ -16,42 +16,23 @@ class Hangar {
 	}
 
 	method seRequiereEnemigo() {
-		return enemigosEnJuego.size() <= 3
+		return (enemigosEnJuego.size() <= 3) and (nivelActual.enemigos().size()>0)
 //		return game.allVisuals().filter{ objeto => objeto.tipo() == "enemigo" }.size() <= 3
 	} 
 
 	method generarEnemigo() {
-		if(!self.enemigoAleatorio().isEmpty()){
-		
-			const enemigoNuevo = self.enemigoAleatorio()
-			game.addVisual(enemigoNuevo)
-			enemigoNuevo.configurarColisiones()
-			enemigoNuevo.crearPartesDeLaNave()
-			enemigoNuevo.dispararTodoElTiempo()
-			enemigoNuevo.moverseTodoElTiempo()
-			enemigosEnJuego.add(enemigoNuevo)
-		
-		}
+		const enemigoNuevo = self.enemigoAleatorio()
+		game.addVisual(enemigoNuevo)
+		enemigoNuevo.configurarColisiones()
+		enemigoNuevo.crearPartesDeLaNave()
+		enemigoNuevo.dispararTodoElTiempo()
+		enemigoNuevo.moverseTodoElTiempo()
+		enemigosEnJuego.add(enemigoNuevo)
 	}
 
 	method enemigoAleatorio() {
-		if(!gestorDeNiveles.nivelActual().enemigos().isEmpty()){
-			return nivelActual.enemigos().anyOne()
-		}
-		else {
-			return []
-		}
+		return nivelActual.enemigos().anyOne()
 	}
-
-//	method eliminarEnemigosPerdidos() {
-//		const enemigosPerdidos = enemigosEnJuego.filter{ enemigo => enemigo.position().x() <= -1 }
-//		enemigosPerdidos.forEach{ enemigo => enemigo.desaparecer()}
-//		enemigosEnJuego.removeAll(enemigosPerdidos)
-//	}
-//
-//	method movimientoEnemigo() {
-//		game.onTick(300, "movimiento de enemigos", { enemigosEnJuego.forEach{ enemigo => enemigo.iaMovimiento()}})
-//	}
 
 	method eliminarEnemigo(enemigo) {
 		enemigosEnJuego.remove(enemigo)
@@ -110,6 +91,7 @@ class Nave {
 		gestorDeNiveles.nivelActual().hangar().eliminarEnemigo(self)
 		game.addVisual(explosion)
 		explosion.animacion()
+		gestorDeNiveles.nivelActual().aumentarContador()
 		game.removeVisual(self)
 	}
 	
