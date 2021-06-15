@@ -1,5 +1,6 @@
 import wollok.game.*
 import ataques.*
+import configuraciones.*
 
 object hangar {
 
@@ -19,6 +20,7 @@ object hangar {
 	method generarEnemigo() {
 		const enemigoNuevo = self.enemigoAleatorio()
 		game.addVisual(enemigoNuevo)
+		enemigoNuevo.configurarColisiones()
 		enemigoNuevo.dispararTodoElTiempo()
 		enemigoNuevo.moverseTodoElTiempo()
 		enemigosEnJuego.add(enemigoNuevo)
@@ -70,6 +72,11 @@ class Nave {
 	
 	override method initialize(){
 		game.onCollideDo(self, {algo=>self.teEncontro(algo)})
+	}
+	
+	method configurarColisiones(){
+		config.configurarColisiones(self)
+		partes.forEach({parte=>config.configurarColisiones(parte)})
 	}
 	
 	method dispararTodoElTiempo() {
@@ -153,12 +160,17 @@ class Nave {
 	}
 	
 	method perderVida(danio)
+	
+	method partes(){
+		return []
+	}
 }
 
 class NavePequenia inherits Nave {
 
 	var property vida = 100
 	var property direccion = "arriba"
+	const property partes = [/*TODO= agregar las partes*/]
 
 	method image() {
 		return "naveEnemiga1.png"
