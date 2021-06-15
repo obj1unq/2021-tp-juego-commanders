@@ -1,6 +1,7 @@
 import wollok.game.*
 import ataques.*
 import configuraciones.*
+import hangarDelJugador.*
 
 object hangar {
 
@@ -21,6 +22,7 @@ object hangar {
 		const enemigoNuevo = self.enemigoAleatorio()
 		game.addVisual(enemigoNuevo)
 		enemigoNuevo.configurarColisiones()
+		enemigoNuevo.crearPartesDeLaNave()
 		enemigoNuevo.dispararTodoElTiempo()
 		enemigoNuevo.moverseTodoElTiempo()
 		enemigosEnJuego.add(enemigoNuevo)
@@ -32,7 +34,7 @@ object hangar {
 							new NavePequenia(),
 							new NaveMediana(),
 							new NaveGrande()]
-		return enemigos.anyOne()
+		return enemigos.anyOne()	
 	}
 
 //	method eliminarEnemigosPerdidos() {
@@ -68,14 +70,18 @@ class Nave {
 	const property id = 0.randomUpTo(10000)
 	const property tipo = "enemigo"
 	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
+	const property partes = []
+
 //	const disparoSonido = game.sound("disparo.mp3")
 	
 	override method initialize(){
 		game.onCollideDo(self, {algo=>self.teEncontro(algo)})
+		
 	}
 	
 	method configurarColisiones(){
 		config.configurarColisiones(self)
+		partes.forEach({parte=>config.configurarColisiones(parte)})
 	}
 	
 	method dispararTodoElTiempo() {
@@ -159,15 +165,29 @@ class Nave {
 	}
 	
 	method perderVida(danio)
+	
+	method agregarParte(x,y){
+		const parte = new Proxy(original = self, x = x, y = y)
+		game.addVisual(parte)
+		partes.add(parte)
+	}
 }
 
 class NavePequenia inherits Nave {
 
 	var property vida = 100
 	var property direccion = "arriba"
+	
+	override method partes(){
+		return[]
+	}
 
 	method image() {
 		return "naveEnemiga1.png"
+	}
+	
+	method crearPartesDeLaNave(){
+		self.agregarParte(1,0)
 	}
 	
 	override method iaMovimiento() {
@@ -214,6 +234,11 @@ class NaveMediana inherits Nave {
 
 	method image() {
 		return "naveEnemiga2.png"
+	}
+	
+	method crearPartesDeLaNave(){
+		self.agregarParte(1,0)
+		self.agregarParte(2,0)
 	}
 	
 	override method iaMovimiento() {
@@ -272,6 +297,13 @@ class NaveGrande inherits Nave {
 
 	method image() {
 		return "nave-grande.png"
+	}
+	
+	method crearPartesDeLaNave(){
+		self.agregarParte(1,0)
+		self.agregarParte(2,0)
+		self.agregarParte(3,0)
+		self.agregarParte(4,0)
 	}
 	
 	override method perderVida(danio){
