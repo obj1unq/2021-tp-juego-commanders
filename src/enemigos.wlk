@@ -21,17 +21,26 @@ class Hangar {
 	} 
 
 	method generarEnemigo() {
-		const enemigoNuevo = self.enemigoAleatorio()
-		game.addVisual(enemigoNuevo)
-		enemigoNuevo.configurarColisiones()
-		enemigoNuevo.crearPartesDeLaNave()
-		enemigoNuevo.dispararTodoElTiempo()
-		enemigoNuevo.moverseTodoElTiempo()
-		enemigosEnJuego.add(enemigoNuevo)
+		if(!self.enemigoAleatorio().isEmpty()){
+		
+			const enemigoNuevo = self.enemigoAleatorio()
+			game.addVisual(enemigoNuevo)
+			enemigoNuevo.configurarColisiones()
+			enemigoNuevo.crearPartesDeLaNave()
+			enemigoNuevo.dispararTodoElTiempo()
+			enemigoNuevo.moverseTodoElTiempo()
+			enemigosEnJuego.add(enemigoNuevo)
+		
+		}
 	}
 
 	method enemigoAleatorio() {
-		return nivelActual.enemigos().anyOne()	
+		if(!gestorDeNiveles.nivelActual().enemigos().isEmpty()){
+			return nivelActual.enemigos().anyOne()
+		}
+		else {
+			return []
+		}
 	}
 
 //	method eliminarEnemigosPerdidos() {

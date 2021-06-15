@@ -4,7 +4,7 @@ import hangarDelJugador.*
 import enemigos.*
 
 object gestorDeNiveles {
-	var property nivelActual = new Nivel4()
+	var property nivelActual = new Nivel1()
 }
 
 class Nivel {
