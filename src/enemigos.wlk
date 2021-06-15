@@ -1,5 +1,6 @@
 import wollok.game.*
 import ataques.*
+import configuraciones.*
 
 object hangar {
 
@@ -19,6 +20,7 @@ object hangar {
 	method generarEnemigo() {
 		const enemigoNuevo = self.enemigoAleatorio()
 		game.addVisual(enemigoNuevo)
+		enemigoNuevo.configurarColisiones()
 		enemigoNuevo.dispararTodoElTiempo()
 		enemigoNuevo.moverseTodoElTiempo()
 		enemigosEnJuego.add(enemigoNuevo)
@@ -70,6 +72,10 @@ class Nave {
 	
 	override method initialize(){
 		game.onCollideDo(self, {algo=>self.teEncontro(algo)})
+	}
+	
+	method configurarColisiones(){
+		config.configurarColisiones(self)
 	}
 	
 	method dispararTodoElTiempo() {
