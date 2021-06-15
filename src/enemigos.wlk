@@ -170,7 +170,7 @@ class NavePequenia inherits Nave {
 
 	var property vida = 100
 	var property direccion = "arriba"
-	const property partes =
+	const property partes = [/*TODO= agregar las partes*/]
 
 	method image() {
 		return "naveEnemiga1.png"
