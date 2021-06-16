@@ -92,6 +92,7 @@ class Nave {
 		game.addVisual(explosion)
 		explosion.animacion()
 		gestorDeNiveles.nivelActual().aumentarContador()
+		partes.forEach({parte=>parte.desaparecer()})
 		game.removeVisual(self)
 	}
 	

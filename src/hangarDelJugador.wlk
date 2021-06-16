@@ -69,12 +69,14 @@ class Jugador {
 	method chocar(nave) {
 		vida -= nave.vida()
 		nave.desaparecer()
+		game.say(self,vida.toString())
 //		hangar.eliminarEnemigo(nave)
 	}
 
 	method recibirDisparo(algo) {
 		vida -= algo.damage()
 		algo.desaparecer()
+		game.say(self,vida.toString())
 //		gestorDeDisparos.eliminarDisparo(algo)
 	}
 	
@@ -113,5 +115,9 @@ class Proxy{
   
   method teEncontro(parametro){
   	
+  }
+  
+  method desaparecer(){
+  	game.removeVisual(self)
   }
 }
