@@ -9,6 +9,13 @@ object gestorDelJugador {
 	method partesDelJugador(){
 		jugadorActual.crearPartesDeLaNave()
 	}
+	
+	method resetJugador(){
+		const nuevoJugador = new Jugador()
+		jugadorActual.desaparecer()
+		jugadorActual = nuevoJugador
+		game.addVisual(nuevoJugador)
+	}
 }
 
 class Jugador {
@@ -93,6 +100,11 @@ class Jugador {
 	
 	method teEncontro(algo){
 		//no hace nada
+	}
+	
+	method desaparecer(){
+		partes.forEach({parte=>parte.desaparecer()})
+		game.removeVisual(self)
 	}
 
 }
