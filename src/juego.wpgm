@@ -12,6 +12,6 @@ program juego {
 	game.width(22) // ancho
 	game.boardGround("fondo3.png")
 	game.cellSize(50) // ajustar el tamaño de pixeles de celda
-	new Nivel().iniciar()
+	gestorDeNiveles.nivelActual().iniciar()
 	game.start()
 }

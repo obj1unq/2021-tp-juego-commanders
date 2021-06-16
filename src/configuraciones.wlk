@@ -2,6 +2,7 @@ import wollok.game.*
 import hangarDelJugador.*
 import ataques.*
 import enemigos.*
+import niveles.*
 
 object config {
 		
@@ -29,7 +30,7 @@ object config {
 
 	method aparicionEnemigosAleatorios() {
 		// cada cierto tiempo aparece un enemigo aleatorio
-		game.onTick(4000, "enemigoAleatorio", { hangar.generarEnemigoSiSeRequiere()})
+		game.onTick(4000, "enemigoAleatorio", { gestorDeNiveles.nivelActual().hangar().generarEnemigoSiSeRequiere()})
 	}
 
 //	method fixDisparos() {

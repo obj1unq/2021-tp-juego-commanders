@@ -2,9 +2,11 @@ import wollok.game.*
 import ataques.*
 import configuraciones.*
 import hangarDelJugador.*
+import niveles.*
 
-object hangar {
-
+class Hangar {
+	
+	const nivelActual
 	const property enemigosEnJuego = []
 
 	method generarEnemigoSiSeRequiere() {
@@ -14,7 +16,7 @@ object hangar {
 	}
 
 	method seRequiereEnemigo() {
-		return enemigosEnJuego.size() <= 3
+		return (enemigosEnJuego.size() <= 3) and (nivelActual.enemigos().size()>0)
 //		return game.allVisuals().filter{ objeto => objeto.tipo() == "enemigo" }.size() <= 3
 	} 
 
@@ -29,23 +31,8 @@ object hangar {
 	}
 
 	method enemigoAleatorio() {
-		const enemigos = [ 	new NavePequenia(),
-							new NavePequenia(),
-							new NavePequenia(),
-							new NaveMediana(),
-							new NaveGrande()]
-		return enemigos.anyOne()	
+		return nivelActual.enemigos().anyOne()
 	}
-
-//	method eliminarEnemigosPerdidos() {
-//		const enemigosPerdidos = enemigosEnJuego.filter{ enemigo => enemigo.position().x() <= -1 }
-//		enemigosPerdidos.forEach{ enemigo => enemigo.desaparecer()}
-//		enemigosEnJuego.removeAll(enemigosPerdidos)
-//	}
-//
-//	method movimientoEnemigo() {
-//		game.onTick(300, "movimiento de enemigos", { enemigosEnJuego.forEach{ enemigo => enemigo.iaMovimiento()}})
-//	}
 
 	method eliminarEnemigo(enemigo) {
 		enemigosEnJuego.remove(enemigo)
@@ -55,15 +42,15 @@ object hangar {
 
 class Sonido {
 	const property disparo = game.sound("disparo.mp3")
-	const property fondo = game.sound("musicaFondo.mp3")
+//	const property fondo = game.sound("musicaFondo.mp3")
 	
-	method musicaDeFondo(){
-		fondo.play()
-		game.onTick(20000, "musicaDeFondo", {
-			fondo.stop()
-			fondo.play()
-		})
-	}
+//	method musicaDeFondo(){
+//		fondo.play()
+//		game.onTick(20000, "musicaDeFondo", {
+//			fondo.stop()
+//			fondo.play()
+//		})
+//	}
 }
 
 class Nave {
@@ -101,9 +88,10 @@ class Nave {
 		
 		game.removeTickEvent("movimiento"+self.nombre())
 		game.removeTickEvent("disparo"+self.nombre())
-		hangar.eliminarEnemigo(self)
+		gestorDeNiveles.nivelActual().hangar().eliminarEnemigo(self)
 		game.addVisual(explosion)
 		explosion.animacion()
+		gestorDeNiveles.nivelActual().aumentarContador()
 		game.removeVisual(self)
 	}
 	

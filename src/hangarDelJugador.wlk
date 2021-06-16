@@ -88,6 +88,10 @@ class Jugador {
 		game.addVisual(parte)
 		partes.add(parte)
 	}
+	
+	method teEncontro(algo){
+		//no hace nada
+	}
 
 }
 
