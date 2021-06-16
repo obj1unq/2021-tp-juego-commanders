@@ -9,7 +9,7 @@ import niveles.*
 program juego {
 	game.title("commanders")
 	game.height(12) // alto
-	game.width(22) // ancho
+	game.width(20) // ancho
 	game.boardGround("fondo3.png")
 	game.cellSize(50) // ajustar el tamaño de pixeles de celda
 	gestorDeNiveles.nivelActual().iniciar()
