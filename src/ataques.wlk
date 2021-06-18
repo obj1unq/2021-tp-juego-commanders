@@ -1,5 +1,6 @@
 import wollok.game.*
 import hangarDelJugador.*
+import direcciones.*
 
 // ya no es necesario el gestor de disparos porque los disparos eliminan su propio onTick al desaparecer
 // lo dejo comentado por si necesitamos implementarlo en algun momento
@@ -196,6 +197,34 @@ class Explosion {
 	
 	method teEncontro(algo){
 		//no hace nada
+	}
+}
+
+object embestida {
+	var contador = 20
+	
+	method usar(algo){
+		game.onTick(50, "embestida", {self.embestir(algo)})
+		game.schedule(1500, {game.removeTickEvent("embestida")
+							 contador = 20
+		})
+	}
+	
+	method embestir(algo){
+		if ((contador > 0)and algo.position().x()>0){
+			izquierda.mover(algo)
+			contador -= 1
+		}
+		else {
+			derecha.mover(algo)
+			contador = 0
+		}
+	}
+}
+
+object metralleta {
+	method usar(algo){
+		
 	}
 }
 

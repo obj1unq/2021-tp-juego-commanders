@@ -3,6 +3,7 @@ import ataques.*
 import configuraciones.*
 import hangarDelJugador.*
 import niveles.*
+import direcciones.*
 
 class Hangar {
 	
@@ -58,6 +59,7 @@ class Nave {
 	const property tipo = "enemigo"
 	var property position = game.at(21,0)//game.at(10.randomUpTo(20), 0.randomUpTo(10))
 	const property partes = []
+	var property direccion = arriba
 
 //	const disparoSonido = game.sound("disparo.mp3")
 	
@@ -349,12 +351,12 @@ class Jefe inherits Nave {
 	}
 	
 	method nuevoSubdito(){
-		const subdito = new Subdito(jefe=self, position=game.at(10.randomUpTo(12),0.randomUpTo(7)) )
+		const subdito = new Subdito(jefe=self, position=game.at(15,3) )
 		game.addVisual(subdito)
 		subditos.add(subdito)
 		subdito.configurarColisiones()
 		subdito.crearPartesDeLaNave()
-		subdito.movimientoSubdito()
+		subdito.movimientoInicial()
 		subdito.iaAtaque()
 	}
 	
@@ -363,7 +365,24 @@ class Jefe inherits Nave {
 	}
 	
 	method iaAtaque(){
-		
+		game.onTick(15000,"ataqueJefe", {self.ataqueJefe()})
+	}
+	
+	method ataqueJefe(){
+		if (self.tieneSubdito()){
+			subditos.anyOne().iaAtaque()
+		}
+		else {
+			self.ultimate()
+		}
+	}
+	
+	method tieneSubdito(){
+		return !(subditos.isEmpty())
+	}
+	
+	method ultimate(){
+		//TODO: agregar el ataque que usara el jefe cuando no tenga subditos
 	}
 	
 	method crearPartesDeLaNave(){
@@ -374,6 +393,7 @@ class Jefe inherits Nave {
 class Subdito inherits Nave {
 	var property vida = 500
 	const jefe
+	const ataques = [embestida]
 	
 	method image(){
 		return "subdito.png"
@@ -389,11 +409,29 @@ class Subdito inherits Nave {
 	}
 	
 	method iaAtaque(){
-		
+		game.schedule(5000,{ataques.anyOne().usar(self)})
+	}
+	
+	method movimientoInicial(){
+		game.onTick(200,"movimientoInicial"+self.nombre(),{self.iaMovimientoInicial()})
+	}
+	
+	method iaMovimientoInicial(){
+		if (!(position.x()==10)){
+			position = position.left(1)
+		}
+		else {
+			game.removeTickEvent("movimientoInicial"+self.nombre())
+			self.movimientoSubdito()
+		}
 	}
 	
 	method movimientoSubdito(){
-		
+		game.onTick(200, "movimientoSubdito", {self.iaMovimiento()})
+	}
+	
+	override method iaMovimiento(){
+		direccion.moverSiPuede(self)
 	}
 	
 	method crearPartesDeLaNave(){
