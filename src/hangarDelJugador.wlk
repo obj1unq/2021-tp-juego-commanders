@@ -4,17 +4,19 @@ import enemigos.*
 import ataques.*
 
 object gestorDelJugador {
+
 	var property jugadorActual = jugador
-	
-	method partesDelJugador(){
+
+	method partesDelJugador() {
 		jugadorActual.crearPartesDeLaNave()
 	}
-	
-	method resetJugador(){
+
+	method resetJugador() {
 		jugadorActual.vida(1000)
 		jugadorActual.position(game.at(0, 8))
 		jugadorActual.eliminarPartes()
 	}
+
 }
 
 object jugador {
@@ -33,14 +35,12 @@ object jugador {
 //		//habría que ponerle una posición fija dentro de la pantalla de inicio
 //		return game.at(0,25)
 //	}
-
 //	override method initialize() {
 //		self.crearPartesDeLaNave()
 //	}
-	
 	method configurarColisiones() {
 		config.configurarColisiones(self)
-		partes.forEach({parte=>config.configurarColisiones(parte)})
+		partes.forEach({ parte => config.configurarColisiones(parte)})
 	}
 
 	method image() {
@@ -48,7 +48,7 @@ object jugador {
 	}
 
 	method disparar() {
-		const disparoJugador = new DisparoAliado(damage=20, position=self.position().right(3))
+		const disparoJugador = new DisparoAliado(damage = 20, position = self.position().right(3))
 		game.addVisual(disparoJugador)
 		disparoJugador.movimientoConstante()
 //		gestorDeDisparos.disparoJugador(self.damage(), self.position())
@@ -56,15 +56,12 @@ object jugador {
 
 	method irA(nuevaPosicion) {
 		if (self.posicionDentroDePantalla(nuevaPosicion)) {
-		position = nuevaPosicion			
+			position = nuevaPosicion
 		}
 	}
-	
+
 	method posicionDentroDePantalla(posicion) {
-		return (posicion.x()>=0 && 
-				posicion.x()<=19 &&
-				posicion.y()>=0 &&
-				posicion.y()<=9
+		return (posicion.x() >= 0 && posicion.x() <= 19 && posicion.y() >= 0 && posicion.y() <= 9
 		)
 	}
 
@@ -75,64 +72,72 @@ object jugador {
 	method chocar(nave) {
 		vida -= nave.vida()
 		nave.desaparecer()
-		game.say(self,vida.toString())
+		game.say(self, vida.toString())
 //		hangar.eliminarEnemigo(nave)
 	}
 
 	method recibirDisparo(algo) {
 		vida -= algo.damage()
 		algo.desaparecer()
-		game.say(self,vida.toString())
+		game.say(self, vida.toString())
 //		gestorDeDisparos.eliminarDisparo(algo)
 	}
-	
-	method crearPartesDeLaNave(){
-		self.agregarParte(1,0)
-		self.agregarParte(2,0)
+
+	method crearPartesDeLaNave() {
+		self.agregarParte(1, 0)
+		self.agregarParte(2, 0)
 	}
-	
-	method agregarParte(x,y){
+
+	method agregarParte(x, y) {
 		const parte = new Proxy(original = self, x = x, y = y)
 		game.addVisual(parte)
 		partes.add(parte)
 	}
-	
-	method teEncontro(algo){
-		//no hace nada
+
+	method teEncontro(algo) {
+	// no hace nada
 	}
-	
-	method desaparecer(){
+
+	method desaparecer() {
 		self.eliminarPartes()
 		game.removeVisual(self)
 	}
-	
-	method eliminarPartes(){
-		partes.forEach({parte=>parte.desaparecer()})
+
+	method eliminarPartes() {
+		partes.forEach({ parte => parte.desaparecer()})
 	}
 
 }
 
-class Proxy{
-  const original
-  const x
-  const y
+class Proxy {
+
+	const original
+	const x
+	const y
+
 //  const position
-  method position() { 
-  	return original.position().right(x).up(y)
-  }
-  method chocar(algo) { 
-    original.chocar(algo)
-  }
-  
-  method recibirDisparo(disparo){
-  	original.recibirDisparo(disparo)
-  }
-  
-  method teEncontro(parametro){
-  	
-  }
-  
-  method desaparecer(){
-  	game.removeVisual(self)
-  }
+	method position() {
+		return original.position().right(x).up(y)
+	}
+
+	method image() {
+		return "vacio.png"
+	}
+
+	method chocar(algo) {
+		original.chocar(algo)
+	}
+
+	method recibirDisparo(disparo) {
+		original.recibirDisparo(disparo)
+	}
+
+	method teEncontro(parametro) {
+	}
+
+	method desaparecer() {
+		game.removeVisual(self)
+	}
+
 }
+
