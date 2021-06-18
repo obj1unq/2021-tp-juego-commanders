@@ -56,7 +56,7 @@ class Sonido {
 class Nave {
 	const property id = 0.randomUpTo(10000)
 	const property tipo = "enemigo"
-	var property position = game.at(10.randomUpTo(20), 0.randomUpTo(10))
+	var property position = game.at(21,0)//game.at(10.randomUpTo(20), 0.randomUpTo(10))
 	const property partes = []
 
 //	const disparoSonido = game.sound("disparo.mp3")
@@ -299,5 +299,105 @@ class NaveGrande inherits Nave {
 		vida -= danio
 	}
 
+}
+
+class Jefe inherits Nave {
+	var property vida = 10000
+	var property subditos = []
+	
+	method image(){
+		return "jefe.png"
+	}
+	
+	override method perderVida(danio){
+		if(subditos.isEmpty()){
+			vida -= danio
+		}
+	}
+	
+	method movimientoJefe(){
+		game.onTick(200, "movimientoJefe", {self.iaMovimiento()})
+	}
+	
+	override method iaMovimiento(){
+		if(!(position == self.posicionJefe())){
+			position = position.left(1)
+		}
+		else {
+			game.removeTickEvent("movimientoJefe")
+			self.invocarSubditos()
+			self.iaAtaque()
+		}
+	}
+	
+	method posicionJefe(){
+		return game.at(16,0)
+	}
+	
+	method invocarSubditos(){
+		game.onTick(20000, "nuevoSubdito", {self.subditoNecesario()})
+	}
+	
+	method subditoNecesario(){
+		if(self.necesitaSubdito()){
+			self.nuevoSubdito()
+		}
+	}
+	
+	method necesitaSubdito(){
+		return subditos.size() < 2
+	}
+	
+	method nuevoSubdito(){
+		const subdito = new Subdito(jefe=self, position=game.at(10.randomUpTo(12),0.randomUpTo(7)) )
+		game.addVisual(subdito)
+		subditos.add(subdito)
+		subdito.configurarColisiones()
+		subdito.crearPartesDeLaNave()
+		subdito.movimientoSubdito()
+		subdito.iaAtaque()
+	}
+	
+	method perderSubdito(subdito){
+		subditos.remove(subdito)
+	}
+	
+	method iaAtaque(){
+		
+	}
+	
+	method crearPartesDeLaNave(){
+		
+	}
+}
+
+class Subdito inherits Nave {
+	var property vida = 500
+	const jefe
+	
+	method image(){
+		return "subdito.png"
+	}
+	
+	override method perderVida(danio){
+		vida -= danio
+	}
+	
+	override method desaparecer(){
+		jefe.perderSubdito(self)
+		super()
+	}
+	
+	method iaAtaque(){
+		
+	}
+	
+	method movimientoSubdito(){
+		
+	}
+	
+	method crearPartesDeLaNave(){
+		
+	}
 }
 

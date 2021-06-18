@@ -4,21 +4,20 @@ import enemigos.*
 import ataques.*
 
 object gestorDelJugador {
-	var property jugadorActual = new Jugador()
+	var property jugadorActual = jugador
 	
 	method partesDelJugador(){
 		jugadorActual.crearPartesDeLaNave()
 	}
 	
 	method resetJugador(){
-		const nuevoJugador = new Jugador()
-		jugadorActual.desaparecer()
-		jugadorActual = nuevoJugador
-		game.addVisual(nuevoJugador)
+		jugadorActual.vida(1000)
+		jugadorActual.position(game.at(0, 8))
+		jugadorActual.eliminarPartes()
 	}
 }
 
-class Jugador {
+object jugador {
 
 	var property vida = 1000
 	const property tipo = "jugador"
@@ -103,8 +102,12 @@ class Jugador {
 	}
 	
 	method desaparecer(){
-		partes.forEach({parte=>parte.desaparecer()})
+		self.eliminarPartes()
 		game.removeVisual(self)
+	}
+	
+	method eliminarPartes(){
+		partes.forEach({parte=>parte.desaparecer()})
 	}
 
 }

@@ -5,7 +5,7 @@ import enemigos.*
 
 object gestorDeNiveles {
 
-	var property nivelActual = new Nivel1()
+	var property nivelActual = new Nivel4()
 
 	method cambiarNivel(nivel) {
 		nivelActual = nivel
@@ -56,6 +56,10 @@ class Nivel {
 	}
 
 	method siguienteNivel()
+	
+	method posicionAleatoria(){
+		return game.at(10.randomUpTo(20), 0.randomUpTo(10))
+	}
 
 }
 
@@ -64,7 +68,7 @@ class Nivel1 inherits Nivel {
 	const property enemigosRequeridos = 3
 
 	method enemigos() {
-		return [ new NavePequenia() ]
+		return [ new NavePequenia(position = self.posicionAleatoria()) ]
 	}
 
 	override method enemigosRequeridos() {
@@ -84,7 +88,10 @@ class Nivel2 inherits Nivel {
 	const property enemigosRequeridos = 3
 
 	method enemigos() {
-		return [ new NavePequenia(), new NavePequenia(), new NaveMediana() ]
+		return [new NavePequenia(position = self.posicionAleatoria()), 
+				new NavePequenia(position = self.posicionAleatoria()), 
+				new NaveMediana(position = self.posicionAleatoria())
+		]
 	}
 
 	override method enemigosRequeridos() {
@@ -104,7 +111,13 @@ class Nivel3 inherits Nivel {
 	const property enemigosRequeridos = 3
 
 	method enemigos() {
-		return [ new NavePequenia(), new NavePequenia(), new NavePequenia(), new NaveMediana(), new NaveMediana(), new NaveGrande() ]
+		return [new NavePequenia(position = self.posicionAleatoria()), 
+				new NavePequenia(position = self.posicionAleatoria()), 
+				new NavePequenia(position = self.posicionAleatoria()), 
+				new NaveMediana(position = self.posicionAleatoria()), 
+				new NaveMediana(position = self.posicionAleatoria()), 
+				new NaveGrande(position = self.posicionAleatoria())
+		]
 	}
 
 	override method enemigosRequeridos() {
@@ -129,6 +142,20 @@ class Nivel4 inherits Nivel {
 
 	override method siguienteNivel() {
 		game.stop()
+	}
+	
+	override method iniciar(){
+		super()
+		self.agregarJefe()
+	}
+	
+	method agregarJefe(){
+		const jefe = new Jefe()
+		game.addVisual(jefe)
+		jefe.configurarColisiones()
+		jefe.crearPartesDeLaNave()
+		jefe.iaAtaque()
+		jefe.movimientoJefe()
 	}
 
 }
