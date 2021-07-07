@@ -22,7 +22,6 @@ class GestorDeNiveles {
 	}
 	
 }
-	
 
 object menuInicio inherits GestorDeNiveles{
 	
@@ -40,7 +39,11 @@ object menuInicio inherits GestorDeNiveles{
 class Nivel  inherits GestorDeNiveles {
 
 	const property jugador = gestorDelJugador.jugadorActual()
-	
+	const s = new S()
+	const c = new C()
+	const o = new O()
+	const r = new R()
+	const e = new E()
 	override method image() {
 		return "fondo3.png"
 	}
@@ -49,6 +52,12 @@ class Nivel  inherits GestorDeNiveles {
 		super()		 
 		fondo.iniciar()
 		game.addVisual(jugador)
+		game.addVisual(s)
+		game.addVisual(c)
+		game.addVisual(o)
+		game.addVisual(r)
+		game.addVisual(e)
+		self.mostrarVidas(jugador)
 		gestorDelJugador.partesDelJugador()
 		self.configurarMecanicas()
 	}
@@ -86,6 +95,10 @@ class Nivel  inherits GestorDeNiveles {
 	
 	method posicionAleatoria(){
 		return game.at(10.randomUpTo(20), 0.randomUpTo(10))
+	}
+	
+	method mostrarVidas(_jugador) {
+		jugador.vidas().forEach({ vida => game.addVisual(vida)})
 	}
 
 }
