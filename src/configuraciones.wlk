@@ -33,7 +33,7 @@ object montaniaBucle {
 	method image() = "montaniaBucle.png"
 	
 	method movimientoConstante(){
-		game.onTick(1000, "movimientoFondo", {self.moverse()})
+		game.onTick(800, "movimientoFondo", {self.moverse()})
 	}
 	
 	method moverse(){

@@ -26,6 +26,7 @@ object jugador {
 	var property position = game.at(0, 8)
 	const property damage = 100
 	const property partes = []
+	var property cantidadEnemigosEliminados = 0
 	
 	method configurarColisiones() {
 		config.configurarColisiones(self)
@@ -38,7 +39,9 @@ object jugador {
 
 	method disparar() {
 		const disparoJugador = new DisparoAliado(damage = 20, position = self.position().right(3))
+		const sonidoDisparo = new SonidoDisparo()
 		game.addVisual(disparoJugador)
+		sonidoDisparo.sonido()
 		disparoJugador.movimientoConstante()
 //		gestorDeDisparos.disparoJugador(self.damage(), self.position())
 	}
@@ -60,9 +63,10 @@ object jugador {
 
 	method chocar(nave) {
 		vida -= nave.vida()
-		nave.desaparecer()
+		nave.eliminar()
 		game.say(self, vida.toString())
-//		hangar.eliminarEnemigo(nave)
+		//hangar.eliminarEnemigo(nave)
+		cantidadEnemigosEliminados += 1
 	}
 
 	method recibirDisparo(algo) {

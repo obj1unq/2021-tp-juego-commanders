@@ -142,18 +142,62 @@ object lanzallamas {
 
 }
 
+class Animacion {
+	
+	var property image
+	var indice = 0
+	
+	method animacion() //lista de 4 imagenes
+	
+	method ejecutarAnimacion(wollokmon){
+		self.siguienteImagen()
+		game.addVisualIn(self, wollokmon.position()) 
+		game.schedule(400, ({self.siguienteImagen()}))
+		game.schedule(800, ({self.siguienteImagen()}))
+		game.schedule(1200, ({self.siguienteImagen()}))
+		game.schedule(1500, ({
+			game.removeVisual(self)
+		}))
+	}
+	
+	method siguienteImagen(){
+		image = self.animacion().get(indice)
+		indice = (indice + 1) % 4
+	}
+	
+}
+
 class Explosion {
+	
+	
 	const property position
 	var property image = "explosion1.png"
 	const vel = 100
-	//TODO: modificar esta clase para que no lagee
+	/*
+	const frames = ["explosion1.png","explosion2.png","explosion3.png","explosion4.png","explosion5.png","explosion6.png","explosion7.png"]
+	var indice = 0
+	
+	method animacion() {
+		self.siguienteFrame()
+		game.addVisualIn(self, position) 
+		game.schedule(vel, ({self.siguienteFrame()}))
+		game.schedule(vel, ({self.siguienteFrame()}))
+		game.schedule(vel, ({self.siguienteFrame()}))
+		game.schedule(vel, ({game.removeVisual(self)}))
+	}
+		
+	method siguienteFrame(){
+		image = frames.get(indice)
+		indice += 1
+	}
+	*/
+	
 	method animacion() {
 		game.schedule(vel, {
 			image = "explosion2.png"
 			self.a1()
 		})
 	}
-	
 	method a1(){
 		game.schedule(vel, {
 			image = "explosion3.png"
@@ -226,5 +270,14 @@ object metralleta {
 	method usar(algo){
 		
 	}
+}
+
+class SonidoDisparo {
+	const sonido = game.sound("disparo.mp3")
+	
+	method sonido(){
+		sonido.volume(0.2)
+		sonido.play()
+	} 
 }
 

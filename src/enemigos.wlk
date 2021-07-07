@@ -39,9 +39,6 @@ object hangar {
 
 }
 
-class Sonido {
-	const property disparo = game.sound("disparo.mp3")
-}
 
 class Nave {
 	const property id = 0.randomUpTo(10000)
@@ -49,11 +46,12 @@ class Nave {
 	var property position = game.at(21,0)
 	const property partes = []
 	var property direccion = arriba
-	
+
 	method configurarColisiones(){
 		config.configurarColisiones(self)
 		partes.forEach({parte=>config.configurarColisiones(parte)})
 	}
+
 	
 	method dispararTodoElTiempo() {
 		game.onTick(1000, "disparo"+self.nombre(), { self.disparar()})
@@ -61,8 +59,9 @@ class Nave {
 
 	method disparar() {
 		const disparo=new DisparoEnemigo(damage=20,position=self.position().left(1))
+		const sonidoDisparo = new SonidoDisparo()
 		game.addVisual(disparo)
-		new Sonido().disparo().play()
+		sonidoDisparo.sonido()
 		disparo.movimientoConstante()
 //		gestorDeDisparos.disparar(20, self.position())
 	}
@@ -97,10 +96,10 @@ class Nave {
 	}
 	
 	method posicionDentroDePantalla() {
-		return (position.x()>=0 && 
+		return (position.x()>=-1 && 
 				position.x()<=20 &&
 				position.y()>=-1 &&
-				position.y()<=10
+				position.y()<=12
 		)
 	}
 
@@ -120,7 +119,9 @@ class Nave {
 		algo.chocar(self)
 	}
 
-	method chocar(algo) {
+	method eliminar() {
+		self.desaparecer()
+		hangar.eliminarEnemigo(self)
 	}
 
 	method moverseSiEstaEnPantalla() {

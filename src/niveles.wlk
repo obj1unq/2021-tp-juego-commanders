@@ -32,13 +32,14 @@ object menuInicio inherits GestorDeNiveles{
 	
 	override method configuracionTeclas(){
 		keyboard.num1().onPressDo({nivel1.iniciar()})
+		keyboard.num2().onPressDo({game.say(self, "Aun en construcción")})
+		keyboard.num3().onPressDo({game.stop()})
 	}
 }
 
 class Nivel  inherits GestorDeNiveles {
 
 	const property jugador = gestorDelJugador.jugadorActual()
-	var property enemigosAsesinados = 0
 	
 	override method image() {
 		return "fondo3.png"
@@ -46,7 +47,7 @@ class Nivel  inherits GestorDeNiveles {
 
 	override method iniciar() {
 		super()		 
-		//fondo.iniciar()
+		fondo.iniciar()
 		game.addVisual(jugador)
 		gestorDelJugador.partesDelJugador()
 		self.configurarMecanicas()
@@ -63,25 +64,23 @@ class Nivel  inherits GestorDeNiveles {
 		keyboard.a().onPressDo({ jugador.irA(jugador.position().left(1))})
 		keyboard.d().onPressDo({ jugador.irA(jugador.position().right(1))})
 		keyboard.space().onPressDo({ jugador.disparar()})	
+		keyboard.backspace().onPressDo({menuInicio.iniciar()})
 	}
 
 	method aparicionEnemigosAleatorios() {
 		// cada cierto tiempo aparece un enemigo aleatorio
-		game.onTick(4000, "enemigoAleatorio", { hangar.generarEnemigoSiSeRequiere(self)})
+		game.onTick(4000, "enemigoAleatorio", {
+			 self.pasarNivel()
+			 hangar.generarEnemigoSiSeRequiere(self)})
 	}
 	
 	method pasarNivel() {
-		if (enemigosAsesinados >= self.enemigosRequeridos()) {
+		if (jugador.cantidadEnemigosEliminados() >= self.enemigosRequeridos()) {
 			self.siguienteNivel()
 		}
 	}
 
 	method enemigosRequeridos()
-
-	method aumentarContador() {
-		enemigosAsesinados += 1
-		self.pasarNivel()
-	}
 
 	method siguienteNivel()
 	
@@ -96,15 +95,14 @@ object nivel1 inherits Nivel {
 	method enemigos() {
 		return [ new NavePequenia(position = self.posicionAleatoria()) ]
 	}
-
-	override method siguienteNivel() {
-		nivel3.iniciar()
-	}
 	
 	override method enemigosRequeridos(){
 		return 3
 	}
 
+	override method siguienteNivel() {
+		nivel2.iniciar()
+	}
 }
 
 object nivel2 inherits Nivel {
