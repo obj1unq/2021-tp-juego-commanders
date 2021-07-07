@@ -1,0 +1,31 @@
+import wollok.game.*
+import hangarDelJugador.*
+import configuraciones.*
+import ataques.*
+import enemigos.*
+import niveles.*
+
+describe "juego commander" {
+	
+	var navePequeniaEnemigue
+	var naveMedianaEnemigue
+	var naveGrandeEnemigue
+	var naveJugador
+	var disparoJugador
+	var disparoEnemigo
+	
+	fixture {
+		navePequeniaEnemigue = new NavePequenia()
+		naveMedianaEnemigue = new NaveMediana()
+		naveGrandeEnemigue = new NaveGrande()
+		naveJugador = gestorDelJugador.jugadorActual()
+		disparoJugador = new DisparoAliado(damage = 20, position = naveJugador.position().right(3))
+		disparoEnemigo = new DisparoEnemigo(damage=20,position=navePequeniaEnemigue.position().left(1)) // los tres tipos de naves causan el mismo daño 
+	}
+
+test "nave del jugador recive daño de cualquier disparo de una nave enemiga" {
+	naveJugador.recibirDisparo(disparoEnemigo)
+	assert.equals(980, naveJugador.vida())
+	}
+}
+
