@@ -65,7 +65,6 @@ object jugador {
 		vida -= nave.vida()
 		nave.eliminar()
 		game.say(self, vida.toString())
-		//hangar.eliminarEnemigo(nave)
 		cantidadEnemigosEliminados += 1
 	}
 

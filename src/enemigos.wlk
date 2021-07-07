@@ -43,6 +43,7 @@ object hangar {
 class Nave {
 	const property id = 0.randomUpTo(10000)
 	const property tipo = "enemigo"
+	var property vida = 100
 	var property position = game.at(21,0)
 	const property partes = []
 	var property direccion = arriba
@@ -137,7 +138,13 @@ class Nave {
 		disparo.desaparecer()
 	}
 	
-	method perderVida(danio)
+	method perderVida(danio){
+		if(vida > danio){
+			vida -= danio
+		}else{
+			self.eliminar()
+		}
+	}
 	
 	method agregarParte(x,y){
 		const parte = new Proxy(original = self, x = x, y = y)
@@ -148,7 +155,9 @@ class Nave {
 
 class NavePequenia inherits Nave {
 
-	var property vida = 100
+	override method vida(){
+		return 100
+	}
 	
 	override method partes(){
 		return[]
@@ -192,16 +201,16 @@ class NavePequenia inherits Nave {
 	override method velocidad() {
 		return 300
 	}
-	
-	override method perderVida(danio){
-		vida -= danio
-	}
 }
 
 class NaveMediana inherits Nave {
 
-	var property vida = 250
+	
 	var property contadorDePasos = 5
+	
+	override method vida(){
+		return 150
+	}
 
 	method image() {
 		return "naveEnemiga2.png"
@@ -256,15 +265,13 @@ class NaveMediana inherits Nave {
 	override method velocidad() {
 		return 500
 	}
-	
-	override method perderVida(danio){
-		vida -= danio
-	}
 }
 
 class NaveGrande inherits Nave {
 
-	var property vida = 500
+	override method vida(){
+		return 300
+	}
 
 	method image() {
 		return "nave-grande.png"
@@ -280,16 +287,15 @@ class NaveGrande inherits Nave {
 		self.agregarParte(3,1)
 		self.agregarParte(4,1)
 	}
-	
-	override method perderVida(danio){
-		vida -= danio
-	}
-
 }
 
 class Jefe inherits Nave {
-	var property vida = 10000
+	
 	var property subditos = []
+	
+	override method vida(){
+		return 800
+	}
 	
 	method image(){
 		return "jefe.png"
@@ -375,9 +381,13 @@ class Jefe inherits Nave {
 }
 
 class Subdito inherits Nave {
-	var property vida = 500
+	
 	const jefe
 	const ataques = [embestida]
+	
+	override method vida(){
+		return 400
+	}
 	
 	method image(){
 		return "subdito.png"
