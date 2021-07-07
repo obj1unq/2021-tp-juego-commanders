@@ -26,18 +26,7 @@ object jugador {
 	var property position = game.at(0, 8)
 	const property damage = 100
 	const property partes = []
-
-//	const direcciones = [arriba = {self.position().up(1)},]
-//	const abajo = {jugador.position().down(1)}
-//	const izquierda = {jugador.position().left(1)}
-//	const derecha = {jugador.position().rigth(1)}
-//	method position() {
-//		//habría que ponerle una posición fija dentro de la pantalla de inicio
-//		return game.at(0,25)
-//	}
-//	override method initialize() {
-//		self.crearPartesDeLaNave()
-//	}
+	
 	method configurarColisiones() {
 		config.configurarColisiones(self)
 		partes.forEach({ parte => config.configurarColisiones(parte)})
@@ -109,35 +98,5 @@ object jugador {
 
 }
 
-class Proxy {
 
-	const original
-	const x
-	const y
-
-//  const position
-	method position() {
-		return original.position().right(x).up(y)
-	}
-
-	method image() {
-		return "vacio.png"
-	}
-
-	method chocar(algo) {
-		original.chocar(algo)
-	}
-
-	method recibirDisparo(disparo) {
-		original.recibirDisparo(disparo)
-	}
-
-	method teEncontro(parametro) {
-	}
-
-	method desaparecer() {
-		game.removeVisual(self)
-	}
-
-}
 

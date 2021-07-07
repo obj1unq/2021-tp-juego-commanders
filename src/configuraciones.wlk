@@ -5,41 +5,6 @@ import enemigos.*
 import niveles.*
 
 object config {
-		
-	const jugador = gestorDelJugador.jugadorActual()
-		
-	method configurarMecanicas() {
-		self.configuracionTeclas()
-		self.aparicionEnemigosAleatorios()
-//		self.fixDisparos()
-//		self.fixEnemigos()
-//		hangar.movimientoEnemigo()
-//		gestorDeDisparos.movimientoDisparo()
-		jugador.configurarColisiones()
-	}
-
-	method configuracionTeclas() {
-		
-		
-		keyboard.w().onPressDo({ jugador.irA(jugador.position().up(1))})
-		keyboard.s().onPressDo({ jugador.irA(jugador.position().down(1))})
-		keyboard.a().onPressDo({ jugador.irA(jugador.position().left(1))})
-		keyboard.d().onPressDo({ jugador.irA(jugador.position().right(1))})
-		keyboard.space().onPressDo({ jugador.disparar()})
-	}
-
-	method aparicionEnemigosAleatorios() {
-		// cada cierto tiempo aparece un enemigo aleatorio
-		game.onTick(4000, "enemigoAleatorio", { gestorDeNiveles.nivelActual().hangar().generarEnemigoSiSeRequiere()})
-	}
-
-//	method fixDisparos() {
-//		game.onTick(5000, "eliminarBalasPerdidas", { gestorDeDisparos.eliminarBalasPerdidas()})
-//	}
-
-//	method fixEnemigos() {
-//		game.onTick(5000, "eliminarEnemigosPerdidos", { hangar.eliminarEnemigosPerdidos()})
-//	}
 
 	method configurarColisiones(cosa) {
 		game.onCollideDo(cosa, { algo => algo.teEncontro(cosa)})
@@ -79,6 +44,58 @@ object montaniaBucle {
 			position = position.left(1)
 		}
 	}
+}
+
+object musicaInicio{
+	const musica = game.sound("musicaFondo.mp3")
+	
+	method iniciarSiNoEstaSonando(){
+		if(not self.musicaSonando()){
+			self.iniciar()
+		}
+	}
+	
+	method iniciar(){
+		musica.shouldLoop(true)
+		musica.volume(0.2)
+		musica.play()
+		
+	}
+	
+	method musicaSonando(){
+		return musica.played()
+	}
+}
+
+class Proxy {
+
+	const original
+	const x
+	const y
+
+	method position() {
+		return original.position().right(x).up(y)
+	}
+
+	method image() {
+		return "vacio.png"
+	}
+
+	method chocar(algo) {
+		original.chocar(algo)
+	}
+
+	method recibirDisparo(disparo) {
+		original.recibirDisparo(disparo)
+	}
+
+	method teEncontro(algo) {
+	}
+
+	method desaparecer() {
+		game.removeVisual(self)
+	}
+
 }
 
 

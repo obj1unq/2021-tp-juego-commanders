@@ -3,52 +3,80 @@ import configuraciones.*
 import hangarDelJugador.*
 import enemigos.*
 
-object gestorDeNiveles {
-
-	var property nivelActual = new Nivel4()
-
-	method cambiarNivel(nivel) {
-		nivelActual = nivel
+class GestorDeNiveles {
+	
+	method iniciar() { 
+		game.clear()
+		game.addVisual(self)
+		self.configuracionTeclas()
+		//detener musica si esta sonando
+		self.iniciarMusica()
 	}
-
-	method resetearJugador() {
-		gestorDelJugador.resetJugador()
+	
+	method position(){return game.origin()}
+	method image()
+	method configuracionTeclas()
+	
+	method iniciarMusica() {
+		game.schedule(500, {musicaInicio.iniciarSiNoEstaSonando()})
 	}
+	
+}
+	
 
-	method iniciarNivel() {
-//		game.clear()
-		self.resetearJugador()
-		nivelActual.iniciar()
+object menuInicio inherits GestorDeNiveles{
+	
+	override method image() {
+		return "menuInicio.png"
 	}
-
+	
+	override method configuracionTeclas(){
+		keyboard.num1().onPressDo({nivel1.iniciar()})
+	}
 }
 
-class Nivel {
+class Nivel  inherits GestorDeNiveles {
 
-	const property hangar = new Hangar(nivelActual = self)
 	const property jugador = gestorDelJugador.jugadorActual()
 	var property enemigosAsesinados = 0
-
-	method iniciar() {
-		const musica = new Sonido() // la clase Sonido esta en enemigos
-		game.clear()
-		fondo.iniciar()
-//		musica.musicaDeFondo()
-// hay que implementar el sonido de fondo, lo dejo comentado porque rompe
-		game.addVisual(jugador)
-		gestorDelJugador.partesDelJugador()
-		config.configurarMecanicas()
+	
+	override method image() {
+		return "fondo3.png"
 	}
 
+	override method iniciar() {
+		super()		 
+		//fondo.iniciar()
+		game.addVisual(jugador)
+		gestorDelJugador.partesDelJugador()
+		self.configurarMecanicas()
+	}
+	
+	method configurarMecanicas() {
+		self.aparicionEnemigosAleatorios()
+		jugador.configurarColisiones()
+	}
+
+	override method configuracionTeclas() {		
+		keyboard.w().onPressDo({ jugador.irA(jugador.position().up(1))})
+		keyboard.s().onPressDo({ jugador.irA(jugador.position().down(1))})
+		keyboard.a().onPressDo({ jugador.irA(jugador.position().left(1))})
+		keyboard.d().onPressDo({ jugador.irA(jugador.position().right(1))})
+		keyboard.space().onPressDo({ jugador.disparar()})	
+	}
+
+	method aparicionEnemigosAleatorios() {
+		// cada cierto tiempo aparece un enemigo aleatorio
+		game.onTick(4000, "enemigoAleatorio", { hangar.generarEnemigoSiSeRequiere(self)})
+	}
+	
 	method pasarNivel() {
 		if (enemigosAsesinados >= self.enemigosRequeridos()) {
 			self.siguienteNivel()
 		}
 	}
 
-	method enemigosRequeridos() {
-		return 100
-	}
+	method enemigosRequeridos()
 
 	method aumentarContador() {
 		enemigosAsesinados += 1
@@ -63,29 +91,23 @@ class Nivel {
 
 }
 
-class Nivel1 inherits Nivel {
-
-	const property enemigosRequeridos = 3
+object nivel1 inherits Nivel {
 
 	method enemigos() {
 		return [ new NavePequenia(position = self.posicionAleatoria()) ]
 	}
 
-	override method enemigosRequeridos() {
-		return enemigosRequeridos
-	}
-
 	override method siguienteNivel() {
-//		game.clear()
-		gestorDeNiveles.cambiarNivel(new Nivel2())
-		gestorDeNiveles.iniciarNivel()
+		nivel3.iniciar()
+	}
+	
+	override method enemigosRequeridos(){
+		return 3
 	}
 
 }
 
-class Nivel2 inherits Nivel {
-
-	const property enemigosRequeridos = 3
+object nivel2 inherits Nivel {
 
 	method enemigos() {
 		return [new NavePequenia(position = self.posicionAleatoria()), 
@@ -93,22 +115,18 @@ class Nivel2 inherits Nivel {
 				new NaveMediana(position = self.posicionAleatoria())
 		]
 	}
-
-	override method enemigosRequeridos() {
-		return enemigosRequeridos
+	
+	override method enemigosRequeridos(){
+		return 6
 	}
 
 	override method siguienteNivel() {
-//		game.clear()
-		gestorDeNiveles.cambiarNivel(new Nivel3())
-		gestorDeNiveles.iniciarNivel()
+		nivel3.iniciar()
 	}
 
 }
 
-class Nivel3 inherits Nivel {
-
-	const property enemigosRequeridos = 3
+object  nivel3 inherits Nivel {
 
 	method enemigos() {
 		return [new NavePequenia(position = self.posicionAleatoria()), 
@@ -120,24 +138,24 @@ class Nivel3 inherits Nivel {
 		]
 	}
 
-	override method enemigosRequeridos() {
-		return enemigosRequeridos
+	override method enemigosRequeridos(){
+		return 10
 	}
 
 	override method siguienteNivel() {
-		game.clear()
-		gestorDeNiveles.cambiarNivel(new Nivel4())
-		gestorDeNiveles.iniciarNivel()
+		nivel4.iniciar()
 	}
 
 }
 
-class Nivel4 inherits Nivel {
-
-	const property enemigosRequeridos = 1
+object nivel4 inherits Nivel {
 
 	method enemigos() {
 		return []
+	}
+	
+	override method enemigosRequeridos(){
+		return 1
 	}
 
 	override method siguienteNivel() {

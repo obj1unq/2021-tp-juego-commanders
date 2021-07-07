@@ -5,24 +5,22 @@ import hangarDelJugador.*
 import niveles.*
 import direcciones.*
 
-class Hangar {
+object hangar {
 	
-	const nivelActual
 	const property enemigosEnJuego = []
 
-	method generarEnemigoSiSeRequiere() {
+	method generarEnemigoSiSeRequiere(nivelActual) {
 		if (self.seRequiereEnemigo()) {
-			self.generarEnemigo()
+			self.generarEnemigo(nivelActual)
 		}
 	}
 
 	method seRequiereEnemigo() {
-		return (enemigosEnJuego.size() <= 3) and (nivelActual.enemigos().size()>0)
-//		return game.allVisuals().filter{ objeto => objeto.tipo() == "enemigo" }.size() <= 3
+		return enemigosEnJuego.size() <= 3
 	} 
 
-	method generarEnemigo() {
-		const enemigoNuevo = self.enemigoAleatorio()
+	method generarEnemigo(nivelActual) {
+		const enemigoNuevo = self.enemigoAleatorio(nivelActual)
 		game.addVisual(enemigoNuevo)
 		enemigoNuevo.configurarColisiones()
 		enemigoNuevo.crearPartesDeLaNave()
@@ -31,7 +29,7 @@ class Hangar {
 		enemigosEnJuego.add(enemigoNuevo)
 	}
 
-	method enemigoAleatorio() {
+	method enemigoAleatorio(nivelActual) {
 		return nivelActual.enemigos().anyOne()
 	}
 
@@ -43,30 +41,14 @@ class Hangar {
 
 class Sonido {
 	const property disparo = game.sound("disparo.mp3")
-//	const property fondo = game.sound("musicaFondo.mp3")
-	
-//	method musicaDeFondo(){
-//		fondo.play()
-//		game.onTick(20000, "musicaDeFondo", {
-//			fondo.stop()
-//			fondo.play()
-//		})
-//	}
 }
 
 class Nave {
 	const property id = 0.randomUpTo(10000)
 	const property tipo = "enemigo"
-	var property position = game.at(21,0)//game.at(10.randomUpTo(20), 0.randomUpTo(10))
+	var property position = game.at(21,0)
 	const property partes = []
 	var property direccion = arriba
-
-//	const disparoSonido = game.sound("disparo.mp3")
-	
-	override method initialize(){
-		game.onCollideDo(self, {algo=>self.teEncontro(algo)})
-		
-	}
 	
 	method configurarColisiones(){
 		config.configurarColisiones(self)
@@ -90,10 +72,9 @@ class Nave {
 		
 		game.removeTickEvent("movimiento"+self.nombre())
 		game.removeTickEvent("disparo"+self.nombre())
-		gestorDeNiveles.nivelActual().hangar().eliminarEnemigo(self)
+		hangar.eliminarEnemigo(self)
 		game.addVisual(explosion)
 		explosion.animacion()
-		gestorDeNiveles.nivelActual().aumentarContador()
 		partes.forEach({parte=>parte.desaparecer()})
 		game.removeVisual(self)
 	}
@@ -167,7 +148,6 @@ class Nave {
 class NavePequenia inherits Nave {
 
 	var property vida = 100
-	var property direccion = "arriba"
 	
 	override method partes(){
 		return[]
@@ -220,7 +200,6 @@ class NavePequenia inherits Nave {
 class NaveMediana inherits Nave {
 
 	var property vida = 250
-	var property direccion = "arriba"
 	var property contadorDePasos = 5
 
 	method image() {
@@ -295,6 +274,10 @@ class NaveGrande inherits Nave {
 		self.agregarParte(2,0)
 		self.agregarParte(3,0)
 		self.agregarParte(4,0)
+		self.agregarParte(1,1)
+		self.agregarParte(2,1)
+		self.agregarParte(3,1)
+		self.agregarParte(4,1)
 	}
 	
 	override method perderVida(danio){
