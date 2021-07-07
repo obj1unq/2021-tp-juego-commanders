@@ -98,4 +98,33 @@ class Proxy {
 
 }
 
+class S{
+	method image() = "letras/letraS.png"
+
+	method position() = game.at(10, 11)
+}
+
+class C{
+	method image() = "letras/letraC.png"
+
+	method position() = game.at(11, 11)
+}
+
+class O{
+	method image() = "letras/letraO.png"
+
+	method position() = game.at(12, 11)
+}
+
+class R{
+	method image() = "letras/letraR.png"
+
+	method position() = game.at(13, 11)
+}
+
+class E{
+	method image() = "letras/letraE.png"
+
+	method position() = game.at(14, 11)
+}
 

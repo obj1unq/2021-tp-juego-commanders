@@ -26,6 +26,7 @@ object jugador {
 	var property position = game.at(0, 8)
 	const property damage = 100
 	const property partes = []
+	var property vidas = [vida1, vida2, vida3, vida4]
 	var property cantidadEnemigosEliminados = 0
 	
 	method configurarColisiones() {
@@ -70,6 +71,7 @@ object jugador {
 
 	method recibirDisparo(algo) {
 		vida -= algo.damage()
+		self.eliminarCorazonSiCorresponde()
 		algo.desaparecer()
 		game.say(self, vida.toString())
 //		gestorDeDisparos.eliminarDisparo(algo)
@@ -98,8 +100,33 @@ object jugador {
 	method eliminarPartes() {
 		partes.forEach({ parte => parte.desaparecer()})
 	}
+	
+	method eliminarCorazonSiCorresponde() {
 
+	}
 }
 
 
+object vida1{
+	method image() = "vida.png"
 
+	method position() = game.at(1, 11)
+}
+
+object vida2{
+	method image() = "vida2.png"
+
+	method position() = game.at(2, 11)
+}
+
+object vida3{
+	method image() = "vida3.png"
+
+	method position() = game.at(3, 11)
+}
+
+object vida4{
+	method image() = "vida4.png"
+
+	method position() = game.at(4, 11)
+}
