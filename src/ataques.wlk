@@ -58,9 +58,9 @@ class Disparo {
 		algo.recibirDisparo(self)
 	}
 	
-	method chocar(algo){
-		algo.recibirDisparo(self)
-	}
+//	method chocar(algo){
+//		algo.recibirDisparo(self)
+//	}
 
 }
 

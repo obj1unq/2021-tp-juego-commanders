@@ -100,7 +100,7 @@ class Nivel  inherits GestorDeNiveles {
 	method mostrarVidas(_jugador) {
 		jugador.vidas().forEach({ vida => game.addVisual(vida)})
 	}
-
+	method teEncontro(algo){}
 }
 
 object nivel1 inherits Nivel {

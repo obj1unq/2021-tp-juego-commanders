@@ -1,6 +1,7 @@
 import wollok.game.*
 
 object arriba {
+	method puedeMover(algo){ return !(algo.position().y() == 7)}
 	
 	method moverSiPuede(algo){
 		if(!(algo.position().y() == 7)){
@@ -18,6 +19,7 @@ object arriba {
 }
 
 object abajo {
+	method puedeMover(algo){ return !(algo.position().y() == 0)}
 	
 	method moverSiPuede(algo){
 		if(!(algo.position().y() == 0)){

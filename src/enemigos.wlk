@@ -42,10 +42,10 @@ object hangar {
 
 class Nave {
 	const property id = 0.randomUpTo(10000)
-	const property tipo = "enemigo"
+	const property tipo = "enemigo" // esto se podria referenciar a un objeto
 	var property vida = 100
 	var property position = game.at(21,0)
-	const property partes = []
+	var property partes = []
 	var property direccion = arriba
 
 	method configurarColisiones(){
@@ -123,6 +123,7 @@ class Nave {
 	method eliminar() {
 		self.desaparecer()
 		hangar.eliminarEnemigo(self)
+		self.eliminarPartes()    // faltaba partes.eliminar()
 	}
 
 	method moverseSiEstaEnPantalla() {
@@ -134,7 +135,7 @@ class Nave {
 	}
 	
 	method recibirDisparo(disparo){
-		self.perderVida(disparo.damage())
+		self.eliminar()
 		disparo.desaparecer()
 	}
 	
@@ -145,12 +146,13 @@ class Nave {
 			self.eliminar()
 		}
 	}
-	
+	method eliminarPartes() { self.partes([]) }
 	method agregarParte(x,y){
 		const parte = new Proxy(original = self, x = x, y = y)
 		game.addVisual(parte)
 		partes.add(parte)
 	}
+	method chocar(algo){}
 }
 
 class NavePequenia inherits Nave {
@@ -167,6 +169,7 @@ class NavePequenia inherits Nave {
 		return "naveEnemiga1.png"
 	}
 	
+
 	method crearPartesDeLaNave(){
 		self.agregarParte(1,0)
 	}
@@ -177,24 +180,24 @@ class NavePequenia inherits Nave {
 	}
 	
 	method direccionActual() {
-		if (direccion == "arriba") {
+		if (direccion == arriba) {
 			return self.position().y()+1
 		}
-		else if (direccion == "abajo") {
+		else if (direccion == abajo) {
 			return self.position().y()-1
 		}
 		else {
-			return 666 // esto nunca va a pasar
+			return 0 // TODO: posible self.error("")
 		}
 		
 	}
 	
 	method cambiarDireccionSiEsNecesario() {
 		if (self.position().y()>=9) {
-			direccion = "abajo"
+			direccion = abajo
 		}
 		else if (self.position().y()<=0) {
-			direccion = "arriba"
+			direccion = arriba
 		}
 	}
 	
@@ -237,23 +240,23 @@ class NaveMediana inherits Nave {
 	}
 	
 	method direccionActual() {
-		if (direccion == "arriba") {
+		if (direccion == arriba) {
 			return game.at(self.position().x(),self.position().y()+1)
 		}
-		else if (direccion == "abajo") {
+		else if (direccion == abajo) {
 			return game.at(self.position().x(),self.position().y()-1)
 		}
 		else {
-			return game.at(666,666) // esto nunca va a pasar
+			return game.at(0,0) // TODO: posible self error
 		}
 	}
 	
 	method cambiarDireccion() {
-		if (direccion == "arriba"){
-			direccion = "abajo"
+		if (direccion.puedeMover(self)){ // cambiar por un not direccion.puedeMoverArriba(self)
+			direccion = abajo
 		}
 		else {
-			direccion ="arriba"
+			direccion = arriba
 		}
 	}
 	
