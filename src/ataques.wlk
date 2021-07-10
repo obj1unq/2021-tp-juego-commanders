@@ -54,9 +54,7 @@ class Disparo {
 		)
 	}
 	
-	method teEncontro(algo) {
-		algo.recibirDisparo(self)
-	}
+	method teEncontro(algo) 
 	
 //	method chocar(algo){
 //		algo.recibirDisparo(self)
@@ -73,12 +71,18 @@ class DisparoEnemigo inherits Disparo {
 	override method iaMovimiento() {
 		self.irA(self.position().left(1))
 	}
+	override method teEncontro(algo) {
+		algo.recibirDisparoEnemigo(self)
+	}
 }
 
 class DisparoAliado inherits Disparo {
 
 	override method iaMovimiento() {
 		self.irA(self.position().right(1))
+	}
+	override method teEncontro(algo){
+		algo.recibirDisparoJugador(self)
 	}
 }
 

@@ -123,7 +123,7 @@ class Nave {
 	method eliminar() {
 		self.desaparecer()
 		hangar.eliminarEnemigo(self)
-		self.eliminarPartes()    // faltaba partes.eliminar()
+		self.eliminarPartes()    
 	}
 
 	method moverseSiEstaEnPantalla() {
@@ -133,8 +133,8 @@ class Nave {
 			self.iaMovimiento()
 		}
 	}
-	
-	method recibirDisparo(disparo){
+	method recibirDisparoEnemigo(disparo) {} // los disparos entre las mismas naves enemigas del jugador no se dañan entre ellas
+	method recibirDisparoJugador(disparo){
 		self.eliminar()
 		disparo.desaparecer()
 	}

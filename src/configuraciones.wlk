@@ -84,9 +84,11 @@ class Proxy {
 	method chocar(algo) {
 		original.chocar(algo)
 	}
-
-	method recibirDisparo(disparo) {
-		original.recibirDisparo(disparo)
+	method recibirDisparoEnemigo(disparo){
+		original.recibirDisparoEnemigo(disparo)
+	}
+	method recibirDisparoJugador(disparo) {
+		original.recibirDisparoJugador(disparo)
 	}
 
 	method teEncontro(algo) {

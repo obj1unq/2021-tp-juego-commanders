@@ -69,12 +69,11 @@ object jugador {
 		cantidadEnemigosEliminados += 1
 	}
 
-	method recibirDisparo(algo) {
-		vida -= algo.damage()
+	method recibirDisparoEnemigo(disparo) {
+		vida -= disparo.damage()
 		self.eliminarCorazonSiCorresponde()
-		algo.desaparecer()
+		disparo.desaparecer()
 		game.say(self, vida.toString())
-//		gestorDeDisparos.eliminarDisparo(algo)
 	}
 
 	method crearPartesDeLaNave() {
@@ -102,7 +101,7 @@ object jugador {
 	}
 	
 	method eliminarCorazonSiCorresponde() {
-
+			
 	}
 }
 
