@@ -21,13 +21,15 @@ object gestorDelJugador {
 
 object jugador {
 
-	var property vida = 1000
+	var property vida = 800
 	const property tipo = "jugador"
 	var property position = game.at(0, 8)
 	const property damage = 100
 	const property partes = []
-	var property vidas = [vida1, vida2, vida3, vida4]
+	var property corazones = #{corazon1, corazon2, corazon3, corazon4}
 	var property cantidadEnemigosEliminados = 0
+	var property danioAcumulado = 0
+	var property corazonesPerdidos = 0
 	
 	method configurarColisiones() {
 		config.configurarColisiones(self)
@@ -64,6 +66,8 @@ object jugador {
 
 	method chocar(nave) {
 		vida -= nave.vida()
+		danioAcumulado += nave.vida()
+		self.eliminarCorazonSiCorresponde()
 		nave.eliminar()
 		game.say(self, vida.toString())
 		cantidadEnemigosEliminados += 1
@@ -71,6 +75,7 @@ object jugador {
 
 	method recibirDisparoEnemigo(disparo) {
 		vida -= disparo.damage()
+		danioAcumulado += disparo.damage()
 		self.eliminarCorazonSiCorresponde()
 		disparo.desaparecer()
 		game.say(self, vida.toString())
@@ -101,31 +106,50 @@ object jugador {
 	}
 	
 	method eliminarCorazonSiCorresponde() {
-			
+			if(danioAcumulado >= 200 ){
+				corazonesPerdidos += 1
+				self.perderCorazon()
+				danioAcumulado = 0
+				}
 	}
+
+	method perderCorazon(){ 
+		game.removeVisual(self.corazonAPerder())
+		corazones.remove(self.corazonAPerder())
+		self.terminoElJuego()
+	}
+	method corazonAPerder() = corazones.find({corazon => corazon.orden() == corazonesPerdidos})
+	
+	method terminoElJuego() {
+		if(corazones.isEmpty()){
+			game.stop()
+			
+		}
+	}
+	
 }
 
 
-object vida1{
+object corazon1{
 	method image() = "vida.png"
-
+	method orden() = 1
 	method position() = game.at(1, 11)
 }
 
-object vida2{
+object corazon2{
 	method image() = "vida2.png"
-
+	method orden() = 2
 	method position() = game.at(2, 11)
 }
 
-object vida3{
+object corazon3{
 	method image() = "vida3.png"
-
+	method orden() = 3
 	method position() = game.at(3, 11)
 }
 
-object vida4{
+object corazon4{
 	method image() = "vida4.png"
-
+	method orden() = 4
 	method position() = game.at(4, 11)
 }

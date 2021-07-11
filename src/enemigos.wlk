@@ -59,7 +59,7 @@ class Nave {
 	}
 
 	method disparar() {
-		const disparo=new DisparoEnemigo(damage=20,position=self.position().left(1))
+		const disparo=new DisparoEnemigo(damage=100,position=self.position().left(1))
 		const sonidoDisparo = new SonidoDisparo()
 		game.addVisual(disparo)
 		sonidoDisparo.sonido()
@@ -139,20 +139,21 @@ class Nave {
 		disparo.desaparecer()
 	}
 	
-	method perderVida(danio){
-		if(vida > danio){
-			vida -= danio
-		}else{
-			self.eliminar()
-		}
-	}
+//	method perderVida(danio){
+//		if(vida > danio){
+//			vida -= danio
+//		}else{
+//			self.eliminar()
+//		}
+//	}
+	method crearPartesDeLaNave()
 	method eliminarPartes() { self.partes([]) }
 	method agregarParte(x,y){
 		const parte = new Proxy(original = self, x = x, y = y)
 		game.addVisual(parte)
 		partes.add(parte)
 	}
-	method chocar(algo){}
+	method chocar(algo){} // si chocan entre las naves enemigas no sucede nada
 }
 
 class NavePequenia inherits Nave {
@@ -161,16 +162,16 @@ class NavePequenia inherits Nave {
 		return 100
 	}
 	
-	override method partes(){
-		return[]
-	}
+//	override method partes(){
+//		return[]
+//	}
 
 	method image() {
 		return "naveEnemiga1.png"
 	}
 	
 
-	method crearPartesDeLaNave(){
+	override method crearPartesDeLaNave(){
 		self.agregarParte(1,0)
 	}
 	
@@ -219,7 +220,7 @@ class NaveMediana inherits Nave {
 		return "naveEnemiga2.png"
 	}
 	
-	method crearPartesDeLaNave(){
+	override method crearPartesDeLaNave(){
 		self.agregarParte(1,0)
 		self.agregarParte(2,0)
 	}
@@ -304,10 +305,15 @@ class Jefe inherits Nave {
 		return "jefe.png"
 	}
 	
-	override method perderVida(danio){
+	method perderVida(danio){
 		if(subditos.isEmpty()){
 			vida -= danio
 		}
+	}
+	
+	override method recibirDisparoJugador(disparo){
+		self.perderVida(disparo)
+		disparo.desaparecer()
 	}
 	
 	method movimientoJefe(){
@@ -396,8 +402,13 @@ class Subdito inherits Nave {
 		return "subdito.png"
 	}
 	
-	override method perderVida(danio){
-		vida -= danio
+	method perderVida(disparo){
+		vida -= disparo.damage()
+	}
+	
+	override method recibirDisparoJugador(disparo){
+		self.perderVida(disparo)
+		disparo.desaparecer()
 	}
 	
 	override method desaparecer(){

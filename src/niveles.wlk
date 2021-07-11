@@ -9,7 +9,6 @@ class GestorDeNiveles {
 		game.clear()
 		game.addVisual(self)
 		self.configuracionTeclas()
-		//detener musica si esta sonando
 		self.iniciarMusica()
 	}
 	
@@ -98,7 +97,7 @@ class Nivel  inherits GestorDeNiveles {
 	}
 	
 	method mostrarVidas(_jugador) {
-		jugador.vidas().forEach({ vida => game.addVisual(vida)})
+		jugador.corazones().forEach({ corazon => game.addVisual(corazon)})
 	}
 	method teEncontro(algo){}
 }
