@@ -187,4 +187,50 @@ object nivel4 inherits Nivel {
 	}
 
 }
+object estadisticas inherits GestorDeNiveles{
+	var property puntosAcumulados = 0
+	var property cantNavePequenia
+	var property cantNaveMediana
+	var property cantNaveGrande
+	
+	override method image(){ return ""} // poner imagen con un titulo de estadisticas 
+	override method position() = game.at(game.center().x(), 10)
+	
+	override method configuracionTeclas(){
+		keyboard.x().onPressDo({self.terminoElJuego()})
+    	keyboard.c().onPressDo({menuInicio.iniciar()})
+	}
+	
+	method showPerdiste(){
+		game.addVisual(perdedor)
+		game.addVisual(self)
+		game.say(perdedor, "derribaste un total de "+self.totalDeNavesDerribadas()+" naves enemigas y sumaste "+puntosAcumulados+" puntos")
+	}
+	
+	method showGanaste(){
+		game.addVisual(ganador)
+		game.addVisual(self)
+		game.say(ganador, "derribaste un total de "+self.totalDeNavesDerribadas()+" naves enemigas y sumaste "+puntosAcumulados+" puntos")
+	}
+	
+	method terminoElJuego() { game.stop() }
+	
+	method sumarPuntos(puntosDeLaNave) { puntosAcumulados += puntosDeLaNave }
+	
+	method derriboNavePequenia() { cantNavePequenia += 1}
+	method derriboNaveMediana() { cantNaveMediana += 1}
+	method derriboNaveGrande() { cantNaveGrande += 1}
+	method totalDeNavesDerribadas() = cantNavePequenia+cantNaveMediana+cantNaveGrande
+}
+object ganador{
+	method image(){} // poner imagen que muestre cuando gane
+	method position() = game.at(game.center().x(), 5)
+}
+object perdedor{
+	method image(){} // poner imagen que muestre cuando pierde
+	method position() = game.at(game.center().x(), 5)
+}
+
+
+
 

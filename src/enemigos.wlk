@@ -47,6 +47,7 @@ class Nave {
 	var property position = game.at(21,0)
 	var property partes = []
 	var property direccion = arriba
+	var property puntosAlDesaparecer = 50
 
 	method configurarColisiones(){
 		config.configurarColisiones(self)
@@ -64,7 +65,6 @@ class Nave {
 		game.addVisual(disparo)
 		sonidoDisparo.sonido()
 		disparo.movimientoConstante()
-//		gestorDeDisparos.disparar(20, self.position())
 	}
 
 	method desaparecer() {
@@ -135,17 +135,11 @@ class Nave {
 	}
 	method recibirDisparoEnemigo(disparo) {} // los disparos entre las mismas naves enemigas del jugador no se dañan entre ellas
 	method recibirDisparoJugador(disparo){
+		estadisticas.sumarPuntos(puntosAlDesaparecer)
 		self.eliminar()
 		disparo.desaparecer()
 	}
 	
-//	method perderVida(danio){
-//		if(vida > danio){
-//			vida -= danio
-//		}else{
-//			self.eliminar()
-//		}
-//	}
 	method crearPartesDeLaNave()
 	method eliminarPartes() { self.partes([]) }
 	method agregarParte(x,y){
@@ -161,15 +155,14 @@ class NavePequenia inherits Nave {
 	override method vida(){
 		return 100
 	}
-	
-//	override method partes(){
-//		return[]
-//	}
 
 	method image() {
 		return "naveEnemiga1.png"
 	}
 	
+	override method recibirDisparoJugador(disparo) {
+		super(disparo)
+		estadisticas.derriboNavePequenia()
 
 	override method crearPartesDeLaNave(){
 		self.agregarParte(1,0)
@@ -181,10 +174,10 @@ class NavePequenia inherits Nave {
 	}
 	
 	method direccionActual() {
-		if (direccion == arriba) {
+		if (direccion.apuntaAMisma(arriba)) { 
 			return self.position().y()+1
 		}
-		else if (direccion == abajo) {
+		else if (direccion.apuntaAMisma(abajo)) {
 			return self.position().y()-1
 		}
 		else {
@@ -208,17 +201,19 @@ class NavePequenia inherits Nave {
 }
 
 class NaveMediana inherits Nave {
-
-	
 	var property contadorDePasos = 5
+
+	override method puntosAlDesaparecer() = 100
 	
-	override method vida(){
-		return 150
-	}
+	override method vida()	= 150
 
 	method image() {
 		return "naveEnemiga2.png"
 	}
+	
+	override method recibirDisparoJugador(disparo) {
+		super(disparo)
+		estadisticas.derriboNaveMediana()
 	
 	override method crearPartesDeLaNave(){
 		self.agregarParte(1,0)
@@ -241,10 +236,10 @@ class NaveMediana inherits Nave {
 	}
 	
 	method direccionActual() {
-		if (direccion == arriba) {
+		if (direccion.apuntaAMisma(arriba)) {
 			return game.at(self.position().x(),self.position().y()+1)
 		}
-		else if (direccion == abajo) {
+		else if (direccion.apuntaAMisma(abajo)) {
 			return game.at(self.position().x(),self.position().y()-1)
 		}
 		else {
@@ -253,7 +248,7 @@ class NaveMediana inherits Nave {
 	}
 	
 	method cambiarDireccion() {
-		if (direccion.puedeMover(self)){ // cambiar por un not direccion.puedeMoverArriba(self)
+		if (direccion.puedeMover(self)){ 
 			direccion = abajo
 		}
 		else {
@@ -276,12 +271,16 @@ class NaveGrande inherits Nave {
 	override method vida(){
 		return 300
 	}
+	override method puntosAlDesaparecer() = 150
 
 	method image() {
 		return "nave-grande.png"
 	}
-	
-	method crearPartesDeLaNave(){
+	override method recibirDisparoJugador(disparo) {
+		super(disparo)
+		estadisticas.derriboNaveGrande()
+	}
+	override method crearPartesDeLaNave(){
 		self.agregarParte(1,0)
 		self.agregarParte(2,0)
 		self.agregarParte(3,0)
@@ -296,6 +295,8 @@ class NaveGrande inherits Nave {
 class Jefe inherits Nave {
 	
 	var property subditos = []
+	
+	override method puntosAlDesaparecer() = 1000
 	
 	override method vida(){
 		return 800
@@ -314,8 +315,15 @@ class Jefe inherits Nave {
 	override method recibirDisparoJugador(disparo){
 		self.perderVida(disparo)
 		disparo.desaparecer()
+		self.meVencio()
 	}
-	
+	method meVencio(){ 
+		if(vida== 0) {
+			self.desaparecer()
+			jugador.gano()
+			
+		}
+	}
 	method movimientoJefe(){
 		game.onTick(200, "movimientoJefe", {self.iaMovimiento()})
 	}
@@ -360,7 +368,11 @@ class Jefe inherits Nave {
 	}
 	
 	method perderSubdito(subdito){
-		subditos.remove(subdito)
+		if(subdito.vida()==0){
+			estadisticas.sumarPuntos(subdito.puntosAlDesaparecer())
+			subdito.desaparecer()
+			subditos.remove(subdito)
+		}
 	}
 	
 	method iaAtaque(){
@@ -384,8 +396,15 @@ class Jefe inherits Nave {
 		//TODO: agregar el ataque que usara el jefe cuando no tenga subditos
 	}
 	
-	method crearPartesDeLaNave(){
-		
+	override method crearPartesDeLaNave(){
+		self.agregarParte(0,1)
+		self.agregarParte(0,2)
+		self.agregarParte(0,3)
+		self.agregarParte(0,4)
+		self.agregarParte(1,1)
+		self.agregarParte(1,2)
+		self.agregarParte(1,3)
+		self.agregarParte(1,4)
 	}
 }
 
@@ -394,6 +413,7 @@ class Subdito inherits Nave {
 	const jefe
 	const ataques = [embestida]
 	
+	override method puntosAlDesaparecer() = 500
 	override method vida(){
 		return 400
 	}
@@ -404,6 +424,7 @@ class Subdito inherits Nave {
 	
 	method perderVida(disparo){
 		vida -= disparo.damage()
+		self.desaparecerSiCorresponde()
 	}
 	
 	override method recibirDisparoJugador(disparo){
@@ -411,9 +432,8 @@ class Subdito inherits Nave {
 		disparo.desaparecer()
 	}
 	
-	override method desaparecer(){
+	method desaparecerSiCorresponde(){
 		jefe.perderSubdito(self)
-		super()
 	}
 	
 	method iaAtaque(){
@@ -442,8 +462,11 @@ class Subdito inherits Nave {
 		direccion.moverSiPuede(self)
 	}
 	
-	method crearPartesDeLaNave(){
-		
+	override method crearPartesDeLaNave(){
+		self.agregarParte(1,0)
+		self.agregarParte(2,0)
+		self.agregarParte(1,1)
+		self.agregarParte(2,1)
 	}
 }
 

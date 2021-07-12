@@ -3,6 +3,8 @@ import wollok.game.*
 object arriba {
 	method puedeMover(algo){ return !(algo.position().y() == 7)}
 	
+	method apuntaAMisma(direccion){return direccion == self}
+	
 	method moverSiPuede(algo){
 		if(!(algo.position().y() == 7)){
 			self.mover(algo)

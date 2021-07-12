@@ -86,26 +86,20 @@ class DisparoAliado inherits Disparo {
 	}
 }
 
-object lanzallamas {
-
-	const damage = 40
-	var property position
-	const property tipo = "proyectil"
-
-	method image() {
-		return "lanzallamas.png"
+object lanzallamas inherits Disparo {
+	
+	override method damage() = 200
+		
+	override method tipo() = self
+	
+	override method image() {
+		return "lanzallamas.png" // hacer la imagen y ponerla en asset
 	}
+	
+	override method iaMovimiento() { self.irA(self.position().left(2))}
 
-	method damage() {
-		return damage
-	}
-
-	method irA(nuevaPosicion) {
-		position = nuevaPosicion
-	}
-
-	method teEncontro(algo) {
-		algo.recibirDisparo(self)
+	override method teEncontro(algo) {
+		algo.recibirDisparoEnemigo(self)
 	}
 
 }
@@ -141,24 +135,6 @@ class Explosion {
 	const property position
 	var property image = "explosion1.png"
 	const vel = 100
-	/*
-	const frames = ["explosion1.png","explosion2.png","explosion3.png","explosion4.png","explosion5.png","explosion6.png","explosion7.png"]
-	var indice = 0
-	
-	method animacion() {
-		self.siguienteFrame()
-		game.addVisualIn(self, position) 
-		game.schedule(vel, ({self.siguienteFrame()}))
-		game.schedule(vel, ({self.siguienteFrame()}))
-		game.schedule(vel, ({self.siguienteFrame()}))
-		game.schedule(vel, ({game.removeVisual(self)}))
-	}
-		
-	method siguienteFrame(){
-		image = frames.get(indice)
-		indice += 1
-	}
-	*/
 	
 	method animacion() {
 		game.schedule(vel, {

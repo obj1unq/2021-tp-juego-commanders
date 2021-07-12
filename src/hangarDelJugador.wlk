@@ -2,6 +2,7 @@ import wollok.game.*
 import configuraciones.*
 import enemigos.*
 import ataques.*
+import niveles.*
 
 object gestorDelJugador {
 
@@ -46,7 +47,6 @@ object jugador {
 		game.addVisual(disparoJugador)
 		sonidoDisparo.sonido()
 		disparoJugador.movimientoConstante()
-//		gestorDeDisparos.disparoJugador(self.damage(), self.position())
 	}
 
 	method irA(nuevaPosicion) {
@@ -109,24 +109,29 @@ object jugador {
 			if(danioAcumulado >= 200 ){
 				corazonesPerdidos += 1
 				self.perderCorazon()
-				danioAcumulado = 0
+				danioAcumulado -= 200
 				}
 	}
 
 	method perderCorazon(){ 
 		game.removeVisual(self.corazonAPerder())
 		corazones.remove(self.corazonAPerder())
-		self.terminoElJuego()
+		self.jugadorPierde()
 	}
+	
 	method corazonAPerder() = corazones.find({corazon => corazon.orden() == corazonesPerdidos})
 	
-	method terminoElJuego() {
-		if(corazones.isEmpty()){
-			game.stop()
-			
-		}
-	}
-	
+	method jugadorPierde() {
+    	if(corazones.isEmpty()){
+      		estadisticas.showPerdiste()
+    		}
+  	}
+  
+  method gano(){
+  		estadisticas.showGanaste()
+  	// mostrar pantalla estadisticas
+  }
+  
 }
 
 
