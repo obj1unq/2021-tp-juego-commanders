@@ -7,6 +7,7 @@ import niveles.*
 
 describe "juego commander" {
 	
+/*	
 	var navePequeniaEnemigue = new NavePequenia()
 	var	naveMedianaEnemigue = new NaveMediana()
 	var	naveGrandeEnemigue = new NaveGrande()
@@ -14,7 +15,6 @@ describe "juego commander" {
 	var	disparoJugador = new DisparoAliado(damage = 20, position = naveJugador.position().right(3))
 	var	disparoEnemigo = new DisparoEnemigo(damage=20,position=navePequeniaEnemigue.position().left(1)) // los tres tipos de naves causan el mismo daño 
 	const sonidoDisparo = new SonidoDisparo()
-/*	
 	fixture {
 		// hay que generar o simular el juego en ejecucion para poder efectuar los removeVisual y removeOntick de las naves enemigas y disparos
 		
@@ -26,5 +26,5 @@ test "nave del jugador recive daño de cualquier disparo de una nave enemiga" {
 	naveJugador.recibirDisparoEnemigo(disparoEnemigo)
 	assert.equals(980, naveJugador.vida())
 	}
-}
 */
+}

@@ -163,6 +163,7 @@ class NavePequenia inherits Nave {
 	override method recibirDisparoJugador(disparo) {
 		super(disparo)
 		estadisticas.derriboNavePequenia()
+	}
 
 	override method crearPartesDeLaNave(){
 		self.agregarParte(1,0)
@@ -214,6 +215,7 @@ class NaveMediana inherits Nave {
 	override method recibirDisparoJugador(disparo) {
 		super(disparo)
 		estadisticas.derriboNaveMediana()
+	}
 	
 	override method crearPartesDeLaNave(){
 		self.agregarParte(1,0)
